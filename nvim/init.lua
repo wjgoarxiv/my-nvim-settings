@@ -13,4 +13,4 @@ require("wjgoarxiv.plugins.lsp.lspsaga")
 require("wjgoarxiv.plugins.lsp.lspconfig")
 require("wjgoarxiv.plugins.lsp.null-ls")
 
-vim.g.copilot_filetypes = { markdown = true }
+vim.g.copilot_filetypes = { "markdown", "tex", "text", "lua", "python", "bash" }
