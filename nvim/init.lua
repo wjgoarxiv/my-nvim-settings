@@ -1,0 +1,16 @@
+print("INFO: init.lua loaded")
+require("wjgoarxiv.plugins-setup")
+require("wjgoarxiv.core.options")
+require("wjgoarxiv.core.keymaps")
+require("wjgoarxiv.core.colorscheme")
+require("wjgoarxiv.plugins.nvim-tree")
+require("wjgoarxiv.plugins.lualine")
+require("wjgoarxiv.plugins.telescope")
+require("wjgoarxiv.plugins.nvim-cmp")
+require("wjgoarxiv.plugins.toggleterm")
+require("wjgoarxiv.plugins.lsp.mason")
+require("wjgoarxiv.plugins.lsp.lspsaga")
+require("wjgoarxiv.plugins.lsp.lspconfig")
+require("wjgoarxiv.plugins.lsp.null-ls")
+
+vim.g.copilot_filetypes = { markdown = true }
