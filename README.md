@@ -1,7 +1,9 @@
-# **What is this?**
+# **my-nvim-settings**
+::wjgoarxiv's private Neovim settings with lua::
+## **What is this?**
 This repository contains a custom Neovim configuration that aims to provide a smooth development experience with various plugins, language servers, and snippets. The configuration is organized in a modular structure to make it easy to maintain and extend.
 
-# **Repository structure**
+## **Repository structure**
 ```shell
 .
 ├── init.lua
@@ -27,7 +29,7 @@ This repository contains a custom Neovim configuration that aims to provide a sm
 └── plugin
     └── packer_compiled.lua
 ```
-# **Plugins**
+## **Plugins**
 This configuration uses Packer as the plugin manager. Below is a list of installed plugins:
 
 - `tokyonight.nvim` - A clean, dark Neovim theme.
@@ -48,7 +50,7 @@ This configuration uses Packer as the plugin manager. Below is a list of install
 - `nvim-ts-autotag` - Automatically close tags.
 - `toggleterm.nvim` - An integrated terminal for Neovim.
 
-# **How to install?**
+## **How to install?**
 1. Make sure you have `Neovim >= 0.8` installed.
 2. Clone this repository into your Neovim configuration directory:
 ```shell
@@ -57,12 +59,12 @@ git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/.config/nvim
 3. Open Neovim and run :PackerSync to install the plugins.
 4. Restart Neovim.
 
-# **Usage**
+## **Usage**
 This configuration provides a set of keymaps, options, and plugin configurations to enhance your Neovim experience. Please refer to the individual Lua files within the lua/wjgoarxiv directory to understand the setup and customization for each plugin and core feature.
 
 Feel free to explore and modify the configuration to fit your needs.
 
-# **References** 
+## **References** 
 1. [Awesome Neovim Setup From Scratch - Full Guide](https://www.youtube.com/watch?v=JWReY93Vl6g)
 2. [How I Setup Neovim On My Mac To Make It Amazing - Complete Guide](https://youtu.be/vdn_pKJUda8)
 3. [How to Configure Neovim to make it Amazing -- complete tutorial](https://youtu.be/J9yqSdvAKXY)
