@@ -89,6 +89,9 @@ return packer.startup(function(use)
 
 	-- toggleterm
 	use("akinsho/toggleterm.nvim")
+		
+	-- Markdown preview
+	use("iamcco/markdown-preview.nvim)
 
 	if packer_bootstrap then
 		require("packer").sync()
