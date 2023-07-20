@@ -30,11 +30,11 @@ end
 return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
-	use("folke/tokyonight.nvim")
+	use("Mofiqul/vscode.nvim")
 	use("tpope/vim-surround")
 	use("vim-scripts/ReplaceWithRegister")
+	use("numToStr/Comment.nvim")
 	use("nvim-tree/nvim-tree.lua")
-	use("kyazdani42/nvim-web-devicons")
 	use("nvim-lualine/lualine.nvim")
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({
@@ -52,6 +52,12 @@ return packer.startup(function(use)
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
 	use("rafamadriz/friendly-snippets") -- useful snippets
 
+	-- devicons
+	use("kyazdani42/nvim-web-devicons")
+
+	-- Github copilot
+	use("github/copilot.vim")
+
 	-- managing & installing lsp severs
 	use("williamboman/mason.nvim")
 	use("williamboman/mason-lspconfig.nvim")
@@ -67,6 +73,7 @@ return packer.startup(function(use)
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 	}) -- enhanced lsp uis
+
 	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
 	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 
@@ -89,9 +96,9 @@ return packer.startup(function(use)
 
 	-- toggleterm
 	use("akinsho/toggleterm.nvim")
-		
+
 	-- Markdown preview
-	use("iamcco/markdown-preview.nvim)
+	use("iamcco/markdown-preview.nvim")
 
 	if packer_bootstrap then
 		require("packer").sync()
