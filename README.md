@@ -62,8 +62,8 @@ git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/.config/nvim
 
 ## **Installation Guide for Neovim (version 0.8 or newer) on WSL2-based Ubuntu**
 ### (1) Prerequisites
-- [ ] Make sure you have WSL2 installed and set as your default version.
-- [ ] Verify that you are running an Ubuntu distribution.
+- [x] Make sure you have WSL2 installed and set as your default version.
+- [x] Verify that you are running an Ubuntu distribution.
 
 ### (2) Step-by-Step Installation
 #### Update your system
