@@ -60,6 +60,55 @@ git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/.config/nvim
 3. Open Neovim and run :PackerSync to install the plugins.
 4. Restart Neovim.
 
+## **Installation Guide for Neovim (version 0.8 or newer) on WSL2-based Ubuntu**
+### (1) Prerequisites
+- [ ] Make sure you have WSL2 installed and set as your default version.
+- [ ] Verify that you are running an Ubuntu distribution.
+
+### (2) Step-by-Step Installation
+#### Update your system
+```shell
+sudo apt update
+sudo apt upgrade
+```
+
+#### Install Required Tools
+```
+sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl
+```
+
+#### Clone the Neovim Repository
+```
+cd ~
+git clone https://github.com/neovim/neovim.git
+```
+
+#### Checkout to the Desired Version
+```
+cd neovim
+git tag
+```
+Find the tag corresponding to the version you want and switch to it:
+```
+git checkout tags/<tag_name>
+```
+Replace <tag_name> with the tag corresponding to the version you want to install.
+
+#### Build and Install
+Now, you can build and install Neovim:
+```
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
+```
+
+#### Verify the Installation
+To verify the installation, use the following command:
+```
+nvim --version
+```
+You now have Neovim (version 0.8 or newer) installed on your WSL2-based Ubuntu system.
+
+
 ## **Usage**
 This configuration provides a set of keymaps, options, and plugin configurations to enhance your Neovim experience. Please refer to the individual Lua files within the lua/wjgoarxiv directory to understand the setup and customization for each plugin and core feature.
 
