@@ -108,6 +108,20 @@ nvim --version
 ```
 You now have Neovim (version 0.8 or newer) installed on your WSL2-based Ubuntu system.
 
+## How to Toggle Between Light and Dark Mode?
+If you're using the [VSCode theme](https://github.com/Mofiqul/vscode.nvim), you might be curious about how to switch between the light and dark modes. The process is straightforward. Simply navigate to the `colorscheme.lua` file and add the appropriate lines:
+
+__For Light Mode__:
+```lua
+-- Set the background for light mode
+vim.o.background = 'light'
+```
+
+__For Dark Mode__:
+```lua
+-- Set the background for dark mode
+vim.o.background = 'dark'
+```
 
 ## **Usage**
 This configuration provides a set of keymaps, options, and plugin configurations to enhance your Neovim experience. Please refer to the individual Lua files within the lua/wjgoarxiv directory to understand the setup and customization for each plugin and core feature.
