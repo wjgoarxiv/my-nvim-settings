@@ -3,7 +3,7 @@ if not status then
 	return
 end
 
-local lualine_vscode = require("lualine.themes.vscode")
+local lualine_tokyonight = require("lualine.themes.tokyonight")
 
 local new_colors = {
 	blue = "#5E81AC", -- nord10
@@ -13,10 +13,10 @@ local new_colors = {
 	black = "#3B4252", -- nord1
 }
 
-lualine_vscode.normal.a.bg = new_colors.blue
-lualine_vscode.insert.a.bg = new_colors.green
-lualine_vscode.visual.a.bg = new_colors.violet
-lualine_vscode.command = {
+lualine_tokyonight.normal.a.bg = new_colors.blue
+lualine_tokyonight.insert.a.bg = new_colors.green
+lualine_tokyonight.visual.a.bg = new_colors.violet
+lualine_tokyonight.command = {
 	a = {
 		gui = "bold",
 		bg = new_colors.yellow,
@@ -26,6 +26,6 @@ lualine_vscode.command = {
 
 lualine.setup({
 	options = {
-		theme = lualine_vscode,
+		theme = lualine_tokyonight,
 	},
 })

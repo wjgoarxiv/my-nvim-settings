@@ -1,16 +1,25 @@
 -- Use VSCode theme for Neovim
 
-local status, vscode = pcall(require, "vscode")
+local status, tokyonight = pcall(require, "tokyonight")
 if not status then
-	print("VSCode theme not found!")
+	print("Tokyonight theme not found!")
 	return
 end
 
-vscode.setup({
+-- for the vscode theme setup
+-- vscode.setup({
+--	transparent = true,
+--	italic_comments = true,
+--	disable_nvimtree_bg = true,
+--	styles = { sidebars = "transparent" },
+--})
+--
+
+-- for the tokyonight theme
+tokyonight.setup({
 	transparent = true,
-	italic_comments = true,
-	disable_nvimtree_bg = true,
+	sidebars = { "qf", "help", "NvimTree", "Outline", "terminal" },
 	styles = { sidebars = "transparent" },
 })
 
-vim.cmd("colorscheme vscode")
+vim.cmd("colorscheme tokyonight-Moon")

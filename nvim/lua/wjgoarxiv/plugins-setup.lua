@@ -30,7 +30,10 @@ end
 return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
-	use("Mofiqul/vscode.nvim")
+
+	-- use("Mofiqul/vscode.nvim")
+	use("folke/tokyonight.nvim")
+
 	use("tpope/vim-surround")
 	use("vim-scripts/ReplaceWithRegister")
 	use("numToStr/Comment.nvim")
