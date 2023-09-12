@@ -21,6 +21,9 @@ keymap.set("n", "<leader>tp", ":tabp<CR>") -- go to previous tab
 -- nvim-tree
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 
+-- MarkdownPreview
+keymap.set("n", "<C-s>", ":MarkdownPreview<CR>")
+
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>") -- find files within current working directory, respects .gitignore
 keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
