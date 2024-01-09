@@ -20,8 +20,7 @@ local clipboard_path = "/mnt/c/Windows/System32/clip.exe"
 if vim.fn.executable(clipboard_path) == 1 then
 	local wsl_yank = function()
 		local event = vim.api.nvim_get_vvar("event")
-		local text = table.concat(event.regcontents, "
-")
+		local text = table.concat(event.regcontents, "")
 		vim.fn.system("echo " .. vim.fn.shellescape(text) .. " | " .. clipboard_path)
 	end
 
