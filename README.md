@@ -32,7 +32,7 @@ This repository contains a custom Neovim configuration that aims to provide a sm
 ## **Plugins**
 This configuration uses Packer as the plugin manager. Below is a list of installed plugins:
 
-- `vscode.nvim` - A Lua port of `gruvbox` colorscheme for Neovim with VScode's light and dark theme
+- `tokyonight.nvim` - A Lua port of `tokyonight` colorscheme for Neovim with VScode's light and dark theme
 - `vim-surround` - Easily manipulate surroundings in Vim.
 - `nvim-tree.lua` - A file explorer tree for Neovim.
 - `nvim-web-devicons` - Web icons for Neovim.
