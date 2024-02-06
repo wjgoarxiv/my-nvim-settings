@@ -1,31 +1,25 @@
--- Set background to dark mode
-vim.o.background = "dark" -- You can change this to "light" if you prefer light mode
+-- Use VSCode theme for Neovim
 
--- Require and configure the gruvbox theme with default options
-require("gruvbox").setup({
-    terminal_colors = true, -- add neovim terminal colors
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-        strings = true,
-        emphasis = true,
-        comments = true,
-        operators = false,
-        folds = true,
-    },
-    strikethrough = true,
-    invert_selection = false,
-    invert_signs = false,
-    invert_tabline = false,
-    invert_intend_guides = false,
-    inverse = true, -- invert background for search, diffs, statuslines and errors
-    contrast = "", -- can be "hard", "soft" or empty string
-    palette_overrides = {},
-    overrides = {},
-    dim_inactive = false,
-    transparent_mode = false,
+local status, tokyonight = pcall(require, "tokyonight")
+if not status then
+	print("Tokyonight theme not found!")
+	return
+end
+
+-- for the vscode theme setup
+-- vscode.setup({
+--	transparent = true,
+--	italic_comments = true,
+--	disable_nvimtree_bg = true,
+--	styles = { sidebars = "transparent" },
+--})
+--
+
+-- for the tokyonight theme
+tokyonight.setup({
+	transparent = true,
+	sidebars = { "qf", "help", "NvimTree", "Outline", "terminal" },
+	styles = { sidebars = "transparent" },
 })
 
--- Apply the colorscheme
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme tokyonight-night")
