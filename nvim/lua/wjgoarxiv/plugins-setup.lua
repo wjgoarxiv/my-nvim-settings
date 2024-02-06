@@ -32,8 +32,8 @@ return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Colorscheme
-	use("ellisonleao/gruvbox.nvim")
-
+	use("folke/tokyonight.nvim")
+	
 	use("tpope/vim-surround")
 	use("vim-scripts/ReplaceWithRegister")
 	use("numToStr/Comment.nvim")
