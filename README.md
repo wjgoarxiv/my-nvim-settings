@@ -80,12 +80,12 @@ sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake c
 #### Clone the Neovim Repository
 ```
 cd ~
-git clone https://github.com/neovim/neovim.git
+git clone https://github.com/Neovim/Neovim.git
 ```
 
 #### Checkout to the Desired Version
 ```
-cd neovim
+cd Neovim
 git tag
 ```
 Find the tag corresponding to the version you want and switch to it:
