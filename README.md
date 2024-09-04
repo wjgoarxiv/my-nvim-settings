@@ -55,7 +55,7 @@ This configuration uses Packer as the plugin manager. Below is a list of install
 1. Make sure you have `Neovim >= 0.8` installed.
 2. Clone this repository into your Neovim configuration directory:
 ```shell
-git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/.config/nvim
+git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/.config/nvim; mv ~/.config/nvim/nvim/ ~/.config/nvim2/; rm -rf ~/.config/nvim/; mv ~/.config/nvim2/ ~/.config/nvim/;
 ```
 3. Open Neovim and run :PackerSync to install the plugins.
 4. Restart Neovim.
@@ -107,6 +107,20 @@ To verify the installation, use the following command:
 nvim --version
 ```
 You now have Neovim (version 0.8 or newer) installed on your WSL2-based Ubuntu system.
+
+## **Installation Guide for Neovim (version 0.8 or newer) on Mac**
+
+Install the latest version of Neovim by typing: 
+
+```
+brew install neovim
+```
+
+Verify the installation: 
+
+```
+nvim --version
+```
 
 ## **Usage**
 This configuration provides a set of keymaps, options, and plugin configurations to enhance your Neovim experience. Please refer to the individual Lua files within the lua/wjgoarxiv directory to understand the setup and customization for each plugin and core feature.
