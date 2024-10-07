@@ -49,7 +49,7 @@ This configuration uses Packer as the plugin manager. Below is a list of install
 - `nvim-autopairs` - Automatically close parentheses, brackets, quotes, etc.
 - `nvim-ts-autotag` - Automatically close tags.
 - `toggleterm.nvim` - An integrated terminal for Neovim.
-- `markdown-preview.nvim` - A useful tool to preview markdown documents.
+- `markdown.nvim` - A useful tool to craft markdown documents.
 
 ## **How to install?**
 1. Make sure you have `Neovim >= 0.8` installed.
