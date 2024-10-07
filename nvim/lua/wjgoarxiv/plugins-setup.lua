@@ -100,8 +100,15 @@ return packer.startup(function(use)
 	-- toggleterm
 	use("akinsho/toggleterm.nvim")
 
-	-- Markdown preview
-	use("iamcco/markdown-preview.nvim")
+	-- Markdown
+	use({
+		"MeanderingProgrammer/markdown.nvim",
+		after = { "nvim-treesitter" },
+		requires = { "echasnovski/mini.nvim", opt = true },
+		config = function()
+			require("render-markdown").setup({})
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()
