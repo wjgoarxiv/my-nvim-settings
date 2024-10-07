@@ -1,31 +1,32 @@
+-- lualine.lua
+
 local status, lualine = pcall(require, "lualine")
 if not status then
 	return
 end
 
-local lualine_tokyonight = require("lualine.themes.tokyonight")
-
-local new_colors = {
-	blue = "#5E81AC", -- nord10
-	green = "#A3BE8C", -- nord14
-	violet = "#B48EAD", -- nord15
-	yellow = "#EBCB8B", -- nord13
-	black = "#3B4252", -- nord1
-}
-
-lualine_tokyonight.normal.a.bg = new_colors.blue
-lualine_tokyonight.insert.a.bg = new_colors.green
-lualine_tokyonight.visual.a.bg = new_colors.violet
-lualine_tokyonight.command = {
-	a = {
-		gui = "bold",
-		bg = new_colors.yellow,
-		fg = new_colors.black,
-	},
-}
-
 lualine.setup({
 	options = {
-		theme = lualine_tokyonight,
+		theme = "auto", -- Automatically adapts to the current colorscheme
+		component_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
+		-- You can add more options here as needed
 	},
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "diff", "diagnostics" },
+		lualine_c = { "filename" },
+		lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_y = { "progress" },
+		lualine_z = { "location" },
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = { "filename" },
+		lualine_x = { "location" },
+		lualine_y = {},
+		lualine_z = {},
+	},
+	-- Extensions can be added here if needed
 })

@@ -31,9 +31,32 @@ return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
 
-	-- Colorscheme
-	use("folke/tokyonight.nvim")
-	
+	-- colorscheme
+	use({
+		"projekt0n/github-nvim-theme",
+		name = "github-theme",
+		config = function()
+			require("github-theme").setup({
+				-- Updated configuration as per the latest version
+				options = {
+					transparent = true,
+					hide_nc_statusline = false,
+					hide_background = false,
+					darken = {
+						sidebars = {
+							enable = true,
+							list = { "qf", "vista_kind", "terminal", "packer", "NvimTree", "help", "Outline" },
+						},
+					},
+				},
+				-- Select the desired theme variant
+				theme_style = "github_light",
+			})
+
+			vim.cmd("colorscheme github_light") -- Ensure this matches the setup above
+		end,
+	})
+
 	use("tpope/vim-surround")
 	use("vim-scripts/ReplaceWithRegister")
 	use("numToStr/Comment.nvim")
@@ -42,7 +65,7 @@ return packer.startup(function(use)
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.1",
+		tag = "0.1.8",
 		requires = { { "nvim-lua/plenary.nvim" } }, -- dependency for telescope
 	}) -- fuzzy finder
 
@@ -55,11 +78,24 @@ return packer.startup(function(use)
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
 	use("rafamadriz/friendly-snippets") -- useful snippets
 
-	-- devicons
-	use("kyazdani42/nvim-web-devicons")
+	-- nvim-web-devicons
+	use({
+		"kyazdani42/nvim-web-devicons",
+		config = function()
+			require("nvim-web-devicons").setup({
+				default = true, -- enable default icons
+				-- You can specify overrides here if needed
+			})
+		end,
+	})
 
 	-- Github copilot
-	use("github/copilot.vim")
+	use({
+		"github/copilot.vim",
+		config = function()
+			-- Copilot configuration
+		end,
+	})
 
 	-- managing & installing lsp severs
 	use("williamboman/mason.nvim")
@@ -100,7 +136,7 @@ return packer.startup(function(use)
 	-- toggleterm
 	use("akinsho/toggleterm.nvim")
 
-	-- Markdown
+	-- Markdown preview
 	use({
 		"MeanderingProgrammer/markdown.nvim",
 		after = { "nvim-treesitter" },
