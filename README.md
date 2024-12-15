@@ -49,6 +49,7 @@ This configuration uses Packer as the plugin manager. Below is a list of install
 - `nvim-ts-autotag` - Automatically close tags.
 - `toggleterm.nvim` - An integrated terminal for Neovim.
 - `markdown.nvim` - A useful tool to craft markdown documents.
+- `markdown-preview.nvim` - A useful previewer to render markdown contents (`.md` files, etc.) 
 
 ## **How to install?**
 1. Make sure you have `Neovim >= 0.8` installed.
