@@ -50,10 +50,10 @@ return packer.startup(function(use)
 					},
 				},
 				-- Select the desired theme variant
-				theme_style = "github_light",
+				theme_style = "github_dark_colorblind",
 			})
 
-			vim.cmd("colorscheme github_light") -- Ensure this matches the setup above
+			vim.cmd("colorscheme github_dark_colorblind") -- Ensure this matches the setup above
 		end,
 	})
 
@@ -137,6 +137,16 @@ return packer.startup(function(use)
 	use("akinsho/toggleterm.nvim")
 
 	-- Markdown preview
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
+
+	-- Markdown treesitter
 	use({
 		"MeanderingProgrammer/markdown.nvim",
 		after = { "nvim-treesitter" },
