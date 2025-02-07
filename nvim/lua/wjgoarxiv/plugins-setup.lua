@@ -31,9 +31,9 @@ return packer.startup(function(use)
 	-- packer can manage itself
 	use("wbthomason/packer.nvim")
 
-	-- Colorscheme
+	-- colorscheme
 	use("folke/tokyonight.nvim")
-	
+
 	use("tpope/vim-surround")
 	use("vim-scripts/ReplaceWithRegister")
 	use("numToStr/Comment.nvim")
@@ -42,7 +42,7 @@ return packer.startup(function(use)
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.1",
+		tag = "0.1.8",
 		requires = { { "nvim-lua/plenary.nvim" } }, -- dependency for telescope
 	}) -- fuzzy finder
 
@@ -55,11 +55,24 @@ return packer.startup(function(use)
 	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
 	use("rafamadriz/friendly-snippets") -- useful snippets
 
-	-- devicons
-	use("kyazdani42/nvim-web-devicons")
+	-- nvim-web-devicons
+	use({
+		"kyazdani42/nvim-web-devicons",
+		config = function()
+			require("nvim-web-devicons").setup({
+				default = true, -- enable default icons
+				-- You can specify overrides here if needed
+			})
+		end,
+	})
 
 	-- Github copilot
-	use("github/copilot.vim")
+	use({
+		"github/copilot.vim",
+		config = function()
+			-- Copilot configuration
+		end,
+	})
 
 	-- managing & installing lsp severs
 	use("williamboman/mason.nvim")
@@ -101,7 +114,24 @@ return packer.startup(function(use)
 	use("akinsho/toggleterm.nvim")
 
 	-- Markdown preview
-	use("iamcco/markdown-preview.nvim")
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
+
+	-- Markdown treesitter
+	use({
+		"MeanderingProgrammer/markdown.nvim",
+		after = { "nvim-treesitter" },
+		requires = { "echasnovski/mini.nvim", opt = true },
+		config = function()
+			require("render-markdown").setup({})
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()
