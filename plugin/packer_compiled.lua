@@ -120,12 +120,6 @@ _G.packer_plugins = {
     path = "/Users/woojin/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
-  ["github-nvim-theme"] = {
-    config = { "\27LJ\2\n’\2\0\0\a\0\15\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\n\0005\3\3\0005\4\a\0005\5\4\0005\6\5\0=\6\6\5=\5\b\4=\4\t\3=\3\v\2B\0\2\0016\0\f\0009\0\r\0'\2\14\0B\0\2\1K\0\1\0'colorscheme github_dark_colorblind\bcmd\bvim\foptions\1\0\1\foptions\0\vdarken\rsidebars\1\0\1\rsidebars\0\tlist\1\b\0\0\aqf\15vista_kind\rterminal\vpacker\rNvimTree\thelp\fOutline\1\0\2\tlist\0\venable\2\1\0\4\20hide_background\1\23hide_nc_statusline\1\16transparent\2\vdarken\0\nsetup\17github-theme\frequire\0" },
-    loaded = true,
-    path = "/Users/woojin/.local/share/nvim/site/pack/packer/start/github-nvim-theme",
-    url = "https://github.com/projekt0n/github-nvim-theme"
-  },
   ["lspkind.nvim"] = {
     loaded = true,
     path = "/Users/woojin/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
@@ -245,6 +239,12 @@ _G.packer_plugins = {
     path = "/Users/woojin/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
+  ["tokyonight.nvim"] = {
+    config = { "\27LJ\2\nπ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\rsidebars\1\6\0\0\aqf\thelp\rNvimTree\fOutline\rterminal\vstyles\1\0\2\vfloats\5\rsidebars\5\1\0\3\vstyles\0\16transparent\1\rsidebars\0\nsetup\15tokyonight\frequire\0" },
+    loaded = true,
+    path = "/Users/woojin/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
+  },
   ["typescript-tools.nvim"] = {
     loaded = true,
     path = "/Users/woojin/.local/share/nvim/site/pack/packer/start/typescript-tools.nvim",
@@ -262,14 +262,14 @@ time([[Defining packer_plugins]], false)
 time([[Setup for markdown-preview.nvim]], true)
 try_loadstring("\27LJ\2\n=\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rmarkdown\19mkdp_filetypes\6g\bvim\0", "setup", "markdown-preview.nvim")
 time([[Setup for markdown-preview.nvim]], false)
--- Config for: github-nvim-theme
-time([[Config for github-nvim-theme]], true)
-try_loadstring("\27LJ\2\n’\2\0\0\a\0\15\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\n\0005\3\3\0005\4\a\0005\5\4\0005\6\5\0=\6\6\5=\5\b\4=\4\t\3=\3\v\2B\0\2\0016\0\f\0009\0\r\0'\2\14\0B\0\2\1K\0\1\0'colorscheme github_dark_colorblind\bcmd\bvim\foptions\1\0\1\foptions\0\vdarken\rsidebars\1\0\1\rsidebars\0\tlist\1\b\0\0\aqf\15vista_kind\rterminal\vpacker\rNvimTree\thelp\fOutline\1\0\2\tlist\0\venable\2\1\0\4\20hide_background\1\23hide_nc_statusline\1\16transparent\2\vdarken\0\nsetup\17github-theme\frequire\0", "config", "github-nvim-theme")
-time([[Config for github-nvim-theme]], false)
 -- Config for: copilot.vim
 time([[Config for copilot.vim]], true)
 try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "copilot.vim")
 time([[Config for copilot.vim]], false)
+-- Config for: tokyonight.nvim
+time([[Config for tokyonight.nvim]], true)
+try_loadstring("\27LJ\2\nπ\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\rsidebars\1\6\0\0\aqf\thelp\rNvimTree\fOutline\rterminal\vstyles\1\0\2\vfloats\5\rsidebars\5\1\0\3\vstyles\0\16transparent\1\rsidebars\0\nsetup\15tokyonight\frequire\0", "config", "tokyonight.nvim")
+time([[Config for tokyonight.nvim]], false)
 -- Config for: nvim-web-devicons
 time([[Config for nvim-web-devicons]], true)
 try_loadstring("\27LJ\2\nO\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fdefault\2\nsetup\22nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")

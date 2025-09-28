@@ -32,24 +32,16 @@ return packer.startup(function(use)
 
   -- colorscheme
   use({
-    "projekt0n/github-nvim-theme",
-    name = "github-theme",
+    "folke/tokyonight.nvim",
     config = function()
-      require("github-theme").setup({
-        options = {
-          transparent = true,
-          hide_nc_statusline = false,
-          hide_background = false,
-          darken = {
-            sidebars = {
-              enable = true,
-              list = { "qf", "vista_kind", "terminal", "packer", "NvimTree", "help", "Outline" },
-            },
-          },
+      require("tokyonight").setup({
+        transparent = false,
+        styles = {
+          sidebars = "",
+          floats = "",
         },
+        sidebars = { "qf", "help", "NvimTree", "Outline", "terminal" },
       })
-
-      vim.cmd("colorscheme github_dark_colorblind")
     end,
   })
 
