@@ -1,7 +1,7 @@
 # **my-nvim-settings**
 ::wjgoarxiv's private Neovim settings with Lua::
 ## **What is this?**
-This repository contains a custom Neovim configuration that aims to provide a smooth development experience with various plugins, language servers, and snippets. The configuration is organized in a modular structure to make it easy to maintain and extend.
+This repository contains a custom Neovim configuration that aims to provide a smooth development experience with various plugins, language servers, and snippets. The configuration is organized in a modular structure to make it easy to maintain and extend, and the Tokyonight colorscheme automatically respects macOS light/dark appearance on startup.
 
 ## **Repository structure**
 ```shell
@@ -32,7 +32,7 @@ This repository contains a custom Neovim configuration that aims to provide a sm
 ## **Plugins**
 This configuration uses Packer as the plugin manager. Key plugins include:
 
-- `github-nvim-theme` – Transparent-friendly GitHub-inspired colors.
+- `tokyonight.nvim` – Day/night Tokyonight variants with macOS appearance detection.
 - `vim-surround`, `ReplaceWithRegister`, `Comment.nvim` – Quality-of-life editing helpers.
 - `nvim-tree.lua` + `nvim-web-devicons` – File explorer with icons.
 - `lualine.nvim` – Lightweight status line.
