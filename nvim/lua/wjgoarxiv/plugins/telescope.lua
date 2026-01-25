@@ -24,4 +24,7 @@ telescope.setup({
   },
 })
 
-telescope.load_extension("fzf")
+-- Load fzf extension only if available
+-- Note: On Windows, telescope-fzf-native requires compilation with make/cmake
+-- If not available, telescope will still work but without fzf sorting
+pcall(telescope.load_extension, "fzf")

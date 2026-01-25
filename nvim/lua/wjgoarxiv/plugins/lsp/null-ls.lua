@@ -1,3 +1,5 @@
+-- null-ls.lua (Updated for none-ls, the maintained fork)
+
 -- import null-ls plugin safely
 local setup, null_ls = pcall(require, "null-ls")
 if not setup then
@@ -11,39 +13,38 @@ local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 -- to setup format on save
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+-- Helper function to safely add sources
+local sources = {}
+
+-- Add formatters (check if they exist before adding)
+if formatting.prettier then
+	table.insert(sources, formatting.prettier)
+end
+
+if formatting.stylua then
+	table.insert(sources, formatting.stylua)
+end
+
+if formatting.black then
+	table.insert(sources, formatting.black.with({
+		condition = function(utils)
+			return utils.root_has_file("pyproject.toml")
+		end,
+	}))
+end
+
+-- Add diagnostics/linters (check if they exist before adding)
+if diagnostics.markdownlint then
+	table.insert(sources, diagnostics.markdownlint.with({
+		condition = function(utils)
+			return utils.root_has_file(".markdownlintrc")
+		end,
+	}))
+end
+
 -- configure null_ls
 null_ls.setup({
-	-- setup formatters & linters
-	sources = {
-		--  to disable file types use
-		--  "formatting.prettier.with({disabled_filetypes = {}})" (see null-ls docs)
-		formatting.prettier, -- js/ts formatter
-		formatting.stylua, -- lua formatter
-		formatting.black.with({ -- python formatter
-			-- only enable black if root has pyproject.toml (not in youtube nvim video)
-			condition = function(utils)
-				return utils.root_has_file("pyproject.toml")
-			end,
-		}),
-		diagnostics.eslint_d.with({ -- js/ts linter
-			-- only enable eslint if root has .eslintrc.js (not in youtube nvim video)
-			condition = function(utils)
-				return utils.root_has_file(".eslintrc.js") -- change file extension if you use something else
-			end,
-		}),
-		diagnostics.markdownlint.with({ -- markdown linter
-			-- only enable markdownlint if root has .markdownlintrc (not in youtube nvim video)
-			condition = function(utils)
-				return utils.root_has_file(".markdownlintrc")
-			end,
-		}),
-		diagnostics.shellcheck.with({ -- shell linter
-			-- only enable shellcheck if root has .shellcheckrc (not in youtube nvim video)
-			condition = function(utils)
-				return utils.root_has_file(".shellcheckrc")
-			end,
-		}),
-	},
+	sources = sources,
 
 	-- configure format on save
 	on_attach = function(current_client, bufnr)

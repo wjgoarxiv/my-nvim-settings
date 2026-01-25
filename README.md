@@ -124,6 +124,58 @@ Verify the installation:
 nvim --version
 ```
 
+## **Installation Guide for Neovim (version 0.11 or newer) on Windows 11 (Native PowerShell)**
+
+This configuration now supports **native Windows** (not just WSL). Follow these steps:
+
+### (1) Prerequisites
+- [x] Windows 11 with PowerShell
+- [x] [Git for Windows](https://git-scm.com/download/win) (required for Packer plugin manager)
+- [x] [Node.js](https://nodejs.org/) (optional, for Mason to install formatters like prettier)
+
+### (2) Install Neovim via winget
+Open PowerShell and run:
+```powershell
+winget install Neovim.Neovim --accept-source-agreements --accept-package-agreements
+```
+
+### (3) Install Git (if not already installed)
+```powershell
+winget install Git.Git --accept-source-agreements --accept-package-agreements
+```
+
+### (4) Clone Configuration
+```powershell
+# Close and reopen PowerShell to refresh PATH, then:
+git clone https://github.com/wjgoarxiv/my-nvim-settings.git
+Copy-Item -Path ".\my-nvim-settings\nvim\*" -Destination "$env:LOCALAPPDATA\nvim" -Recurse -Force
+```
+
+### (5) Install Packer (Plugin Manager)
+```powershell
+git clone --depth 1 https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
+```
+
+### (6) Install Plugins
+Launch Neovim and run:
+```
+:PackerSync
+```
+
+Wait for all plugins to install, then restart Neovim.
+
+### (7) Install LSP Servers and Formatters
+Inside Neovim, run:
+```
+:Mason
+```
+Use the Mason UI to install language servers and formatters as needed.
+
+### Windows-Specific Notes
+- **Clipboard**: Works automatically on native Windows (no configuration needed)
+- **telescope-fzf-native**: Requires compilation with `make`/`cmake`. If unavailable, telescope still works but without fzf sorting optimization
+- **Some Mason tools** may require Python (`pip`) or Node.js (`npm`) to be installed
+
 ## **Usage**
 This configuration provides a set of keymaps, options, and plugin configurations to enhance your Neovim experience. Please refer to the individual Lua files within the lua/wjgoarxiv directory to understand the setup and customization for each plugin and core feature.
 

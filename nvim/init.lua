@@ -15,18 +15,36 @@ require("wjgoarxiv.plugins.lsp.null-ls")
 
 vim.g.copilot_filetypes = { "markdown", "tex", "text", "lua", "python", "bash" }
 
-local clipboard_path = "/mnt/c/Windows/System32/clip.exe"
+-- Cross-platform clipboard configuration
+-- Automatically detects environment (WSL, Windows native, Linux/Mac)
+local function setup_clipboard()
+	local is_wsl = vim.fn.has("wsl") == 1 or vim.fn.exists("$WSL_DISTRO_NAME") == 1
+	local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 
-if vim.fn.executable(clipboard_path) == 1 then
-	local wsl_yank = function()
-		local event = vim.api.nvim_get_vvar("event")
-		local text = table.concat(event.regcontents, "")
-		vim.fn.system("echo " .. vim.fn.shellescape(text) .. " | " .. clipboard_path)
+	if is_wsl then
+		-- WSL: Use clip.exe for yanking to Windows clipboard
+		local clipboard_path = "/mnt/c/Windows/System32/clip.exe"
+		if vim.fn.executable(clipboard_path) == 1 then
+			local wsl_yank = function()
+				local event = vim.api.nvim_get_vvar("event")
+				local text = table.concat(event.regcontents, "")
+				vim.fn.system("echo " .. vim.fn.shellescape(text) .. " | " .. clipboard_path)
+			end
+
+			vim.api.nvim_create_augroup("WSLYank", { clear = true })
+			vim.api.nvim_create_autocmd("TextYankPost", {
+				group = "WSLYank",
+				callback = wsl_yank,
+			})
+		end
+	elseif is_windows then
+		-- Windows native: Neovim handles clipboard automatically
+		-- Just ensure clipboard is set to use system clipboard
+		vim.opt.clipboard = "unnamedplus"
+	else
+		-- Linux/Mac: Use system clipboard
+		vim.opt.clipboard = "unnamedplus"
 	end
-
-	vim.api.nvim_create_augroup("WSLYank", { clear = true })
-	vim.api.nvim_create_autocmd("TextYankPost", {
-		group = "WSLYank",
-		callback = wsl_yank,
-	})
 end
+
+setup_clipboard()
