@@ -1,4 +1,25 @@
-print("INFO: init.lua loaded")
+local function resolve_path(path)
+	return vim.uv.fs_realpath(path) or path
+end
+
+local function should_disable_loader(path)
+	return #path > 120 or path:find(".sisyphus/worktrees", 1, true) ~= nil
+end
+
+local config_path = vim.fn.stdpath("config")
+local data_path = vim.fn.stdpath("data")
+local resolved_config_path = resolve_path(config_path)
+local resolved_data_path = resolve_path(data_path)
+
+if should_disable_loader(resolved_config_path) or should_disable_loader(resolved_data_path) then
+	if vim.loader then
+		if vim.loader.enable then
+			pcall(vim.loader.enable, false)
+		end
+		vim.loader = nil
+	end
+end
+
 require("wjgoarxiv.plugins-setup")
 require("wjgoarxiv.core.options")
 require("wjgoarxiv.core.keymaps")
