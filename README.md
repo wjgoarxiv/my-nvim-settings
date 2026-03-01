@@ -1,188 +1,93 @@
-# **my-nvim-settings**
-::wjgoarxiv's private Neovim settings with Lua::
-## **What is this?**
-This repository contains a custom Neovim configuration that aims to provide a smooth development experience with various plugins, language servers, and snippets. The configuration is organized in a modular structure to make it easy to maintain and extend, and the Tokyonight colorscheme automatically respects macOS light/dark appearance on startup.
+# my-nvim-settings
 
-## **Repository structure**
-```shell
-.
-├── init.lua
-├── lua
-│   └── wjgoarxiv
-│       ├── core
-│       │   ├── colorscheme.lua
-│       │   ├── keymaps.lua
-│       │   └── options.lua
-│       ├── plugins
-│       │   ├── lsp
-│       │   │   ├── lspconfig.lua
-│       │   │   ├── lspsaga.lua
-│       │   │   ├── mason.lua
-│       │   │   └── null-ls.lua
-│       │   ├── lualine.lua
-│       │   ├── nvim-cmp.lua
-│       │   ├── nvim-tree.lua
-│       │   ├── telescope.lua
-│       │   ├── toggleterm.lua
-│       │   └── treesitter.lua
-│       └── plugins-setup.lua
-└── plugin
-    └── packer_compiled.lua
-```
-## **Plugins**
-This configuration uses Packer as the plugin manager. Key plugins include:
+Set up this Neovim config with one prompt for your LLM agent.
+It is designed to be safe to rerun and easy to verify.
 
-- `tokyonight.nvim` – Day/night Tokyonight variants with macOS appearance detection.
-- `vim-surround`, `ReplaceWithRegister`, `Comment.nvim` – Quality-of-life editing helpers.
-- `nvim-tree.lua` + `nvim-web-devicons` – File explorer with icons.
-- `lualine.nvim` – Lightweight status line.
-- `telescope.nvim` + `telescope-fzf-native.nvim` – Fuzzy finding with native sorter.
-- `nvim-cmp`, `cmp-buffer`, `cmp-path`, `cmp-nvim-lsp` – Completion sources.
-- `LuaSnip`, `cmp_luasnip`, `friendly-snippets` – Snippet engine and extras.
-- `copilot.vim` – GitHub Copilot integration (opt-in when authenticated).
-- `mason.nvim`, `mason-lspconfig.nvim`, `mason-null-ls.nvim` – Tooling & server management.
-- `nvim-lspconfig`, `lspsaga.nvim`, `typescript-tools.nvim`, `lspkind.nvim` – LSP UX boosts.
-- `nvimtools/none-ls.nvim` – Local formatters/linters (with optional `none-ls-extras` sources).
-- `nvim-treesitter`, `nvim-autopairs`, `nvim-ts-autotag` – Syntax and editing niceties.
-- `toggleterm.nvim` – Integrated terminal management.
-- `markdown-preview.nvim` – Browser-based Markdown preview.
-- `render-markdown.nvim` – Render Markdown directly inside Neovim buffers.
+## Media
 
-## **How to install?**
-1. Ensure you have `Neovim >= 0.11` installed (older releases will emit deprecation warnings).
-2. Back up any existing `~/.config/nvim` directory, then clone:
-   ```shell
-   git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/.config/nvim
-   ```
-3. Launch Neovim and let Packer bootstrap automatically, or run:
-   ```shell
-   nvim --headless +PackerSync +qa
-   ```
-4. Restart Neovim to load all compiled plugin config.
+<img src="docs/assets/cover.png" alt="my-nvim-settings cover" width="100%" />
 
-> **Tip:** If you want diagnostics/formatters like `eslint_d` or `shellcheck`, install [nvimtools/none-ls-extras.nvim](https://github.com/nvimtools/none-ls-extras.nvim) so those sources are available to none-ls.
+## What this repo gives you
 
-## **Installation Guide for Neovim (version 0.11 or newer) on WSL2-based Ubuntu**
-### (1) Prerequisites
-- [x] Make sure you have WSL2 installed and set as your default version.
-- [x] Verify that you are running an Ubuntu distribution.
+- One-prompt onboarding flow for LLM agents
+- Cross-platform installer for macOS, Linux, and Windows
+- Lazy.nvim-based plugin setup
+- Deterministic post-install health check
+- Safe rerun behavior with backup-on-replace logic
 
-### (2) Step-by-Step Installation
-#### Update your system
-```shell
-sudo apt update
-sudo apt upgrade
+## Quick Start (LLM-first)
+
+Use `PROMPT.md` as the primary one-prompt installer instruction for your agent.
+
+## Manual fallback
+
+### macOS / Linux
+
+```bash
+git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/my-nvim-settings
+cd ~/my-nvim-settings
+bash ./install.sh --yes --ci
 ```
 
-#### Install Required Tools
-```
-sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl
-```
+### Windows (PowerShell)
 
-#### Clone the Neovim Repository
-```
-cd ~
-git clone https://github.com/Neovim/Neovim.git
-```
-
-#### Checkout to the Desired Version
-```
-cd Neovim
-git tag
-```
-Find the tag corresponding to the version you want and switch to it:
-```
-git checkout tags/<tag_name>
-```
-Replace <tag_name> with the tag corresponding to the version you want to install.
-
-#### Build and Install
-Now, you can build and install Neovim:
-```
-make CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make install
-```
-
-#### Verify the Installation
-To verify the installation, use the following command:
-```
-nvim --version
-```
-You now have Neovim (version 0.11 or newer) installed on your WSL2-based Ubuntu system.
-
-## **Installation Guide for Neovim (version 0.11 or newer) on Mac**
-
-Install the latest version of Neovim by typing: 
-
-```
-brew install neovim
-```
-
-Verify the installation: 
-
-```
-nvim --version
-```
-
-## **Installation Guide for Neovim (version 0.11 or newer) on Windows 11 (Native PowerShell)**
-
-This configuration now supports **native Windows** (not just WSL). Follow these steps:
-
-### (1) Prerequisites
-- [x] Windows 11 with PowerShell
-- [x] [Git for Windows](https://git-scm.com/download/win) (required for Packer plugin manager)
-- [x] [Node.js](https://nodejs.org/) (optional, for Mason to install formatters like prettier)
-
-### (2) Install Neovim via winget
-Open PowerShell and run:
 ```powershell
-winget install Neovim.Neovim --accept-source-agreements --accept-package-agreements
+git clone https://github.com/wjgoarxiv/my-nvim-settings.git "$env:USERPROFILE\my-nvim-settings"
+Set-Location "$env:USERPROFILE\my-nvim-settings"
+pwsh -File .\install.ps1 -Yes -CI
 ```
 
-### (3) Install Git (if not already installed)
-```powershell
-winget install Git.Git --accept-source-agreements --accept-package-agreements
+## How to know it worked
+
+The installer should finish without `FAILED` lines and include:
+
+- `Post-install headless validation succeeded: nvim --headless "+Lazy! sync" "+checkhealth" +qa`
+- `Unix installer completed` (or Windows completion equivalent)
+
+You can run the validation command manually:
+
+```bash
+nvim --headless "+Lazy! sync" "+checkhealth" +qa
 ```
 
-### (4) Clone Configuration
-```powershell
-# Close and reopen PowerShell to refresh PATH, then:
-git clone https://github.com/wjgoarxiv/my-nvim-settings.git
-Copy-Item -Path ".\my-nvim-settings\nvim\*" -Destination "$env:LOCALAPPDATA\nvim" -Recurse -Force
-```
+## Rerun Safety
 
-### (5) Install Packer (Plugin Manager)
-```powershell
-git clone --depth 1 https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
-```
+You can run the installer again.
 
-### (6) Install Plugins
-Launch Neovim and run:
-```
-:PackerSync
-```
+- If your config already points to this repo, the installer reports `SKIPPED`.
+- If your old config is different, it is backed up before relinking.
 
-Wait for all plugins to install, then restart Neovim.
+## Requirements
 
-### (7) Install LSP Servers and Formatters
-Inside Neovim, run:
-```
-:Mason
-```
-Use the Mason UI to install language servers and formatters as needed.
+- `git`
+- `nvim` (Neovim 0.11+ recommended)
 
-### Windows-Specific Notes
-- **Clipboard**: Works automatically on native Windows (no configuration needed)
-- **telescope-fzf-native**: Requires compilation with `make`/`cmake`. If unavailable, telescope still works but without fzf sorting optimization
-- **Some Mason tools** may require Python (`pip`) or Node.js (`npm`) to be installed
+## Font (Korean + icons)
 
-## **Usage**
-This configuration provides a set of keymaps, options, and plugin configurations to enhance your Neovim experience. Please refer to the individual Lua files within the lua/wjgoarxiv directory to understand the setup and customization for each plugin and core feature.
+Recommended GUI font:
 
-Feel free to explore and modify the configuration to fit your needs.
+- `D2CodingLigature Nerd Font Mono`
+- fallback: `D2CodingLigature Nerd Font`
 
-## **References** 
-1. [Awesome Neovim Setup From Scratch - Full Guide](https://www.youtube.com/watch?v=JWReY93Vl6g)
-2. [How I Setup Neovim On My Mac To Make It Amazing - Complete Guide](https://youtu.be/vdn_pKJUda8)
-3. [How to Configure Neovim to make it Amazing -- complete tutorial](https://youtu.be/J9yqSdvAKXY)
-4. [Floating and split terminal - Neovim Lua From Scratch #18](https://youtu.be/Qtdbco50sPc)
+If glyphs/icons look wrong, set one of the fonts above in your terminal or Neovim GUI.
+
+## Useful Options
+
+- Unix: `bash ./install.sh --yes --ci`
+  - `--yes`: auto-confirm
+  - `--ci`: CI-style logs
+- Windows: `pwsh -File .\install.ps1 -Yes -CI`
+  - `-Yes`: auto-confirm
+  - `-CI`: CI-style logs
+
+## Troubleshooting
+
+- Missing dependency: install `git` or `nvim`, then rerun.
+- Installer failed: check the last `FAILED` line in output.
+- Wrong path linked: restore from `nvim-backups` and rerun.
+- Plugin/setup check: run `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
+
+## Extra
+
+- For one-shot LLM onboarding flow, see `PROMPT.md`.
+- For exact installer behavior, see `install.sh` and `install.ps1`.

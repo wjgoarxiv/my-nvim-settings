@@ -1,149 +1,110 @@
--- auto install packer if not installed
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-    vim.cmd([[packadd packer.nvim]])
-    return true
-  end
-  return false
-end
-local packer_bootstrap = ensure_packer() -- true if packer was just installed
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
--- autocommand that reloads neovim and installs/updates/removes plugins when file is saved
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
-  augroup end
-]])
-
--- import packer safely
-local status, packer = pcall(require, "packer")
-if not status then
-  return
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
 end
 
--- add list of plugins to install
-return packer.startup(function(use)
-  -- packer can manage itself
-  use("wbthomason/packer.nvim")
+vim.opt.rtp:prepend(lazypath)
 
-  -- colorscheme
-  use({
-    "folke/tokyonight.nvim",
+require("lazy").setup({
+  {
+    "Mofiqul/dracula.nvim",
     config = function()
-      require("tokyonight").setup({
-        transparent = false,
-        styles = {
-          sidebars = "",
-          floats = "",
-        },
-        sidebars = { "qf", "help", "NvimTree", "Outline", "terminal" },
+      require("dracula").setup({
+        transparent_bg = false,
+        italic_comment = true,
       })
     end,
-  })
-
-  use("tpope/vim-surround")
-  use("vim-scripts/ReplaceWithRegister")
-  use("numToStr/Comment.nvim")
-  use("nvim-tree/nvim-tree.lua")
-  use({
+  },
+  { "tpope/vim-surround" },
+  { "vim-scripts/ReplaceWithRegister" },
+  { "numToStr/Comment.nvim" },
+  { "nvim-tree/nvim-tree.lua" },
+  {
     "nvim-tree/nvim-web-devicons",
     config = function()
       require("nvim-web-devicons").setup({
         default = true,
       })
     end,
-  })
-  use("nvim-lualine/lualine.nvim")
-  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-  use({
+  },
+  { "nvim-lualine/lualine.nvim" },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  {
     "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/plenary.nvim" } }, -- dependency for telescope
-  }) -- fuzzy finder
-
-  use("hrsh7th/nvim-cmp") -- completion plugin
-  use("hrsh7th/cmp-buffer") -- source for text in buffer
-  use("hrsh7th/cmp-path") -- source for file system paths
-
-  -- snippets
-  use("L3MON4D3/LuaSnip") -- snippet engine
-  use("saadparwaiz1/cmp_luasnip") -- for autocompletion
-  use("rafamadriz/friendly-snippets") -- useful snippets
-
-  -- Github copilot
-  use({
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+  { "L3MON4D3/LuaSnip" },
+  { "saadparwaiz1/cmp_luasnip" },
+  { "rafamadriz/friendly-snippets" },
+  {
     "github/copilot.vim",
-    config = function()
-      -- Copilot configuration
-    end,
-  })
-
-  -- managing & installing lsp servers
-  use("williamboman/mason.nvim")
-  use("williamboman/mason-lspconfig.nvim")
-
-  -- configuring lsp servers
-  use("neovim/nvim-lspconfig") -- easily configure language servers
-  use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
-  use({
+    config = function() end,
+  },
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "neovim/nvim-lspconfig" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  {
     "nvimdev/lspsaga.nvim",
     branch = "main",
-    requires = {
-      { "nvim-tree/nvim-web-devicons" },
-      { "nvim-treesitter/nvim-treesitter" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
     },
-  }) -- enhanced lsp UIs
-
-  use({
+  },
+  {
     "pmizio/typescript-tools.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
-  })
-  use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
-
-  -- formatting & linting
-  use("nvimtools/none-ls.nvim") -- configure formatters & linters
-  use("jay-babu/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
-
-  -- treesitter configuration
-  use({
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  { "onsails/lspkind.nvim" },
+  { "nvimtools/none-ls.nvim" },
+  { "jay-babu/mason-null-ls.nvim" },
+  {
     "nvim-treesitter/nvim-treesitter",
-    run = function()
+    build = function()
       local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
       ts_update()
     end,
-  })
-
-  -- auto closing
-  use("windwp/nvim-autopairs") -- autoclose parens, brackets, quotes, etc...
-  use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }) -- autoclose tags
-
-  -- toggleterm
-  use("akinsho/toggleterm.nvim")
-
-  -- Markdown preview
-  use({
+  },
+  { "windwp/nvim-autopairs" },
+  {
+    "windwp/nvim-ts-autotag",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+  },
+  { "akinsho/toggleterm.nvim" },
+  {
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function()
+    build = "cd app && npm install",
+    init = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
-  })
-
-  -- Markdown treesitter enhancements
-  use({
+  },
+  {
     "MeanderingProgrammer/render-markdown.nvim",
-    after = { "nvim-treesitter" },
-    requires = { "echasnovski/mini.nvim", opt = true },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      { "echasnovski/mini.nvim", lazy = true },
+    },
     config = function()
       require("render-markdown").setup({})
     end,
-  })
-
-  if packer_bootstrap then
-    require("packer").sync()
-  end
-end)
+  },
+}, {
+  performance = {
+    cache = {
+      enabled = false,
+    },
+  },
+})

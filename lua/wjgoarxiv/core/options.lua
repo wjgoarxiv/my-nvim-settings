@@ -24,6 +24,21 @@ opt.cursorline = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 
+local gui_font_candidates = {
+  "D2CodingLigature Nerd Font Mono:h14",
+  "D2CodingLigature Nerd Font:h14",
+}
+
+for _, font in ipairs(gui_font_candidates) do
+  local ok = pcall(function()
+    opt.guifont = font
+  end)
+  if ok then
+    vim.g.wjgoarxiv_guifont = font
+    break
+  end
+end
+
 -- backspace
 opt.backspace = "indent,eol,start"
 
