@@ -61,6 +61,22 @@ Set-Location "$env:USERPROFILE\my-nvim-settings"
 pwsh -File .\install.ps1 -Yes -CI
 ```
 
+Windows notes:
+
+- `telescope-fzf-native` needs local build tools. Install and reopen PowerShell:
+
+```powershell
+choco install -y cmake mingw
+```
+
+- If `telescope` reports fzf extension load failure, build manually:
+
+```powershell
+Set-Location "$env:LOCALAPPDATA\nvim-data\lazy\telescope-fzf-native.nvim"
+cmake -S . -B build -G "MinGW Makefiles"
+cmake --build build --config Release
+```
+
 ## How to know it worked
 
 The installer should finish without `FAILED` lines and include:
@@ -95,6 +111,12 @@ Recommended GUI font:
 
 If glyphs/icons look wrong, set one of the fonts above in your terminal or Neovim GUI.
 
+Windows quick install (Chocolatey):
+
+```powershell
+choco install -y nerd-fonts-D2Coding
+```
+
 ## Useful Options
 
 - Unix: `bash ./install.sh --yes --ci`
@@ -110,6 +132,7 @@ If glyphs/icons look wrong, set one of the fonts above in your terminal or Neovi
 - Installer failed: check the last `FAILED` line in output.
 - Wrong path linked: restore from `nvim-backups` and rerun.
 - Plugin/setup check: run `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
+- `nvim-tree git/utils.lua:15 obj is nil` can appear outside git repos on some Windows setups. It is usually non-fatal; open Neovim inside a git repo for stable git status behavior.
 
 ## Extra
 
