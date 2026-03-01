@@ -1,33 +1,25 @@
 # my-nvim-settings
 
-Neovim config with installer-driven setup and deterministic post-install verification.
+Set up this Neovim config with one prompt for your LLM agent.
+It is designed to be safe to rerun and easy to verify.
 
 ## Media
 
-![Repository cover preview showing one-line Neovim setup](docs/assets/cover.png)
-![Terminal preview of configured Neovim environment](docs/assets/preview.png)
+<img src="docs/assets/cover.png" alt="my-nvim-settings cover" width="100%" />
 
-## Quick Look
+## What this repo gives you
 
-- Uses a single canonical config root at this repository root (`init.lua`, `lua/`, `plugin/`).
-- Task 2 drift-check command: `test -f init.lua && test ! -f nvim/init.lua`.
-- Supports macOS/Linux and Windows (native PowerShell).
-- Installers are idempotent and emit `INSTALLED` / `SKIPPED` / `FAILED` status lines.
-- Post-install validation command is:
-  `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
-- Default GUI font target is `D2CodingLigature Nerd Font Mono` (fallback: `D2CodingLigature Nerd Font`).
+- One-prompt onboarding flow for LLM agents
+- Cross-platform installer for macOS, Linux, and Windows
+- Lazy.nvim-based plugin setup
+- Deterministic post-install health check
+- Safe rerun behavior with backup-on-replace logic
 
-### Using an LLM (Recommended)
+## Quick Start (LLM-first)
 
-For one-shot, copy/paste onboarding, use `PROMPT.md`.
-It includes platform-specific branches for macOS/Linux and Windows and explicit completion checks.
+Use `PROMPT.md` as the primary one-prompt installer instruction for your agent.
 
 ## Manual fallback
-
-### Prerequisites
-
-- `git`
-- `nvim` (Neovim 0.11 or newer recommended)
 
 ### macOS / Linux
 
@@ -37,7 +29,7 @@ cd ~/my-nvim-settings
 bash ./install.sh --yes --ci
 ```
 
-### Windows (native PowerShell)
+### Windows (PowerShell)
 
 ```powershell
 git clone https://github.com/wjgoarxiv/my-nvim-settings.git "$env:USERPROFILE\my-nvim-settings"
@@ -45,83 +37,57 @@ Set-Location "$env:USERPROFILE\my-nvim-settings"
 pwsh -File .\install.ps1 -Yes -CI
 ```
 
-## Options
+## How to know it worked
 
-- `bash ./install.sh --yes --ci`
-  - `--yes` : auto-confirm for scripts that default to interactive
-  - `--ci` : CI mode logging/output behavior
-- `pwsh -File .\install.ps1 -Yes -CI`
-  - `-Yes` : auto-confirm
-  - `-CI` : CI mode logging/output behavior
+The installer should finish without `FAILED` lines and include:
 
-## Rerun semantics and backup policy
-
-Installers are safe to rerun.
-
-- If config target already points to this repo, status is `SKIPPED` and no replacement happens.
-- If target exists but is different, it is moved to `nvim-backups` before linking:
-
-  - Unix target: `~/.config/nvim` backup `~/.config/nvim-backups/nvim.YYYYMMDDHHMMSS`
-  - Windows target: `$env:LOCALAPPDATA\nvim` backup under `${parent}\nvim-backups`
-
-- Stage-level status labels are always `INSTALLED`, `SKIPPED`, or `FAILED`.
-
-## Post-install outputs
-
-Capture installer output and validate both conditions.
-
-```bash
-bash ./install.sh --yes --ci | tee /tmp/my-nvim-settings-install.log
-```
-
-```powershell
-pwsh -File .\install.ps1 -Yes -CI | Tee-Object -FilePath "$env:TEMP\my-nvim-settings-install.log"
-```
-
-Check for:
-
-- no `FAILED` lines
 - `Post-install headless validation succeeded: nvim --headless "+Lazy! sync" "+checkhealth" +qa`
+- `Unix installer completed` (or Windows completion equivalent)
 
-If needed, run the same command manually:
+You can run the validation command manually:
 
 ```bash
 nvim --headless "+Lazy! sync" "+checkhealth" +qa
 ```
 
+## Rerun Safety
+
+You can run the installer again.
+
+- If your config already points to this repo, the installer reports `SKIPPED`.
+- If your old config is different, it is backed up before relinking.
+
+## Requirements
+
+- `git`
+- `nvim` (Neovim 0.11+ recommended)
+
+## Font (Korean + icons)
+
+Recommended GUI font:
+
+- `D2CodingLigature Nerd Font Mono`
+- fallback: `D2CodingLigature Nerd Font`
+
+If glyphs/icons look wrong, set one of the fonts above in your terminal or Neovim GUI.
+
+## Useful Options
+
+- Unix: `bash ./install.sh --yes --ci`
+  - `--yes`: auto-confirm
+  - `--ci`: CI-style logs
+- Windows: `pwsh -File .\install.ps1 -Yes -CI`
+  - `-Yes`: auto-confirm
+  - `-CI`: CI-style logs
+
 ## Troubleshooting
 
-- `Dependency available: ...` lines should show for `git` and `nvim`; install missing dependencies and rerun.
-- If path replacement is unexpected, check `nvim-backups` and restore previous config from the timestamped backup.
-- If installer exits non-zero, read the last `FAILED` line and fix dependency/path/deployment issue.
-- If icon/Korean glyphs look broken in GUI clients, install/select `D2CodingLigature Nerd Font Mono` (or fallback `D2CodingLigature Nerd Font`) in the terminal/GUI font settings.
+- Missing dependency: install `git` or `nvim`, then rerun.
+- Installer failed: check the last `FAILED` line in output.
+- Wrong path linked: restore from `nvim-backups` and rerun.
+- Plugin/setup check: run `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
 
-## Canonical repository structure
+## Extra
 
-```text
-├── init.lua
-├── lua
-│   └── wjgoarxiv
-│       ├── core
-│       │   ├── colorscheme.lua
-│       │   ├── keymaps.lua
-│       │   └── options.lua
-│       ├── plugins
-│       │   ├── lsp
-│       │   │   ├── lspconfig.lua
-│       │   │   ├── lspsaga.lua
-│       │   │   ├── mason.lua
-│       │   │   └── null-ls.lua
-│       │   ├── lualine.lua
-│       │   ├── nvim-cmp.lua
-│       │   ├── nvim-tree.lua
-│       │   ├── telescope.lua
-│       │   ├── toggleterm.lua
-│       │   └── treesitter.lua
-│       └── plugins-setup.lua
-└── plugin
-```
-
-## Notes
-
-- See `install.sh` / `install.ps1` for exact behavior on each OS.
+- For one-shot LLM onboarding flow, see `PROMPT.md`.
+- For exact installer behavior, see `install.sh` and `install.ps1`.
