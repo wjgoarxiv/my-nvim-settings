@@ -17,7 +17,31 @@ It is designed to be safe to rerun and easy to verify.
 
 ## Quick Start (LLM-first)
 
-Use `PROMPT.md` as the primary one-prompt installer instruction for your agent.
+✅ Copy and paste this block directly into your agent:
+
+```text
+Clone this repository and install it end-to-end.
+
+1) Clone:
+   - macOS/Linux: git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/my-nvim-settings
+   - Windows PowerShell: git clone https://github.com/wjgoarxiv/my-nvim-settings.git "$env:USERPROFILE\my-nvim-settings"
+
+2) Run installer by OS:
+   - macOS/Linux:
+     cd ~/my-nvim-settings
+     bash ./install.sh --yes --ci
+   - Windows PowerShell:
+     Set-Location "$env:USERPROFILE\my-nvim-settings"
+     pwsh -File .\install.ps1 -Yes -CI
+
+3) Verify:
+   nvim --headless "+Lazy! sync" "+checkhealth" +qa
+
+4) Return:
+   - whether install passed
+   - the last 30 log lines
+   - any FAILED markers
+```
 
 ## Manual fallback
 
