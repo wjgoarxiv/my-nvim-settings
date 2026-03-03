@@ -1,3 +1,8 @@
+-- Skip in headless / non-terminal environments
+if #vim.api.nvim_list_uis() == 0 then
+  return
+end
+
 -- Auto-detect terminal backend for image rendering
 local function detect_backend()
   if vim.env.KITTY_PID then

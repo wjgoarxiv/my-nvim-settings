@@ -101,8 +101,7 @@ require("lazy").setup({
   {
     "3rd/image.nvim",
     build = false,
-    ft = { "markdown", "norg", "oil" },
-    event = "BufReadPost *.png,*.jpg,*.jpeg,*.gif,*.webp,*.bmp,*.svg",
+    lazy = false,
   },
 }, {
   performance = {

@@ -34,6 +34,7 @@ require("wjgoarxiv.plugins.lsp.lspsaga")
 require("wjgoarxiv.plugins.lsp.lspconfig")
 require("wjgoarxiv.plugins.lsp.null-ls")
 require("wjgoarxiv.plugins.treesitter")
+require("wjgoarxiv.plugins.image")
 
 vim.g.copilot_filetypes = { "markdown", "tex", "text", "lua", "python", "bash" }
 
