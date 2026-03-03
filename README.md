@@ -20,13 +20,22 @@ It is designed to be safe to rerun and easy to verify.
 ✅ Copy and paste this block directly into your agent:
 
 ```text
-Clone this repository and install it end-to-end.
+Clone (or update) this repository and install it end-to-end.
+IMPORTANT: Never delete or overwrite existing files without backing them up first.
 
-1) Clone:
-   - macOS/Linux: git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/my-nvim-settings
-   - Windows PowerShell: git clone https://github.com/wjgoarxiv/my-nvim-settings.git "$env:USERPROFILE\my-nvim-settings"
+1) Clone or update:
+   - macOS/Linux:
+     If ~/my-nvim-settings does not exist:
+       git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/my-nvim-settings
+     If ~/my-nvim-settings already exists:
+       cd ~/my-nvim-settings && git pull
+   - Windows PowerShell:
+     If "$env:USERPROFILE\my-nvim-settings" does not exist:
+       git clone https://github.com/wjgoarxiv/my-nvim-settings.git "$env:USERPROFILE\my-nvim-settings"
+     If "$env:USERPROFILE\my-nvim-settings" already exists:
+       Set-Location "$env:USERPROFILE\my-nvim-settings"; git pull
 
-2) Install ImageMagick (required for image preview):
+2) Install ImageMagick (skip if already installed):
    - macOS: brew install imagemagick
    - Ubuntu/Debian: sudo apt install imagemagick
    - Windows: choco install imagemagick
@@ -38,6 +47,8 @@ Clone this repository and install it end-to-end.
    - Windows PowerShell:
      Set-Location "$env:USERPROFILE\my-nvim-settings"
      pwsh -File .\install.ps1 -Yes -CI
+   Note: the installer backs up any existing nvim config before relinking.
+   It is safe to rerun.
 
 4) Verify:
    nvim --headless "+Lazy! sync" "+checkhealth" +qa
