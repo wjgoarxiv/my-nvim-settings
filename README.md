@@ -53,7 +53,13 @@ IMPORTANT: Never delete or overwrite existing files without backing them up firs
 4) Verify:
    nvim --headless "+Lazy! sync" "+checkhealth" +qa
 
-5) Return:
+5) Windows only — apply image.nvim patches (safe to rerun):
+   pwsh -File .\lib-win\patch-image-nvim.ps1
+   This patches image.nvim for Windows compatibility (terminal size detection,
+   sixel encoding, and enables Sixel in Windows Terminal). Rerun after any
+   `:Lazy sync` that updates image.nvim.
+
+6) Return:
    - whether install passed
    - the last 30 log lines
    - any FAILED markers
@@ -135,6 +141,22 @@ The backend is auto-detected based on your terminal. No manual configuration nee
 
 **Unsupported terminals:** macOS Terminal.app, older Windows Terminal (< v1.22).
 
+### Windows image preview
+
+On Windows, image.nvim requires three runtime patches that the installer applies automatically via `lib-win/patch-image-nvim.ps1`:
+
+1. **ImageMagick PATH** — `image.lua` auto-detects and injects the ImageMagick install directory into `vim.env.PATH` (choco installs may not propagate to nvim).
+2. **Terminal size detection** — `image.nvim` uses Unix `ioctl` to query pixel dimensions. The patch adds a Windows fallback using `vim.o.columns`/`vim.o.lines`.
+3. **Sixel encoding** — `image.nvim` builds shell commands with Unix single-quotes. The patch switches to `vim.fn.system({list})` which bypasses `cmd.exe` quoting entirely.
+
+The patch script also enables `experimental.enableSixelGraphics` in Windows Terminal settings.
+
+**After a `:Lazy sync` that updates image.nvim**, rerun the patch:
+
+```powershell
+pwsh -File .\lib-win\patch-image-nvim.ps1
+```
+
 ## Requirements
 
 - `git`
@@ -172,7 +194,11 @@ choco install -y nerd-fonts-D2Coding
 - Wrong path linked: restore from `nvim-backups` and rerun.
 - Plugin/setup check: run `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
 - `nvim-tree git/utils.lua:15 obj is nil` can appear outside git repos on some Windows setups. It is usually non-fatal; open Neovim inside a git repo for stable git status behavior.
-- Image preview not showing: ensure `imagemagick` is installed and on PATH (`magick --version`). On Windows, requires Windows Terminal v1.22+ for Sixel support. On macOS/Linux, use Ghostty or Kitty.
+- Image preview not showing on **macOS/Linux**: ensure `imagemagick` is installed and on PATH (`magick --version`). Use Ghostty or Kitty terminal.
+- Image preview not showing on **Windows**: three things must be true:
+  1. ImageMagick is installed (`choco install imagemagick`) and `magick --version` works in PowerShell.
+  2. Windows Terminal v1.22+ is installed (`wt --version`).
+  3. image.nvim patches have been applied: `pwsh -File .\lib-win\patch-image-nvim.ps1`. Rerun after `:Lazy sync`.
 
 ## Extra
 

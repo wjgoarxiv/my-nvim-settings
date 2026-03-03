@@ -3,6 +3,14 @@ if #vim.api.nvim_list_uis() == 0 then
   return
 end
 
+-- Ensure ImageMagick is on PATH (Windows choco installs may not propagate to nvim)
+if vim.fn.has("win32") == 1 and vim.fn.executable("magick") == 0 then
+  local matches = vim.fn.glob("C:\\Program Files\\ImageMagick*", false, true)
+  if #matches > 0 then
+    vim.env.PATH = matches[#matches] .. ";" .. vim.env.PATH
+  end
+end
+
 -- Auto-detect terminal backend for image rendering
 local function detect_backend()
   if vim.env.KITTY_PID then
