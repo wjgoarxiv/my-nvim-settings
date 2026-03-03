@@ -72,10 +72,7 @@ require("lazy").setup({
   { "jay-babu/mason-null-ls.nvim" },
   {
     "nvim-treesitter/nvim-treesitter",
-    build = function()
-      local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-      ts_update()
-    end,
+    build = ":TSUpdate",
   },
   { "windwp/nvim-autopairs" },
   {
@@ -100,6 +97,12 @@ require("lazy").setup({
     config = function()
       require("render-markdown").setup({})
     end,
+  },
+  {
+    "3rd/image.nvim",
+    build = false,
+    ft = { "markdown", "norg", "oil" },
+    event = "BufReadPost *.png,*.jpg,*.jpeg,*.gif,*.webp,*.bmp,*.svg",
   },
 }, {
   performance = {

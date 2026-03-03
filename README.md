@@ -26,7 +26,12 @@ Clone this repository and install it end-to-end.
    - macOS/Linux: git clone https://github.com/wjgoarxiv/my-nvim-settings.git ~/my-nvim-settings
    - Windows PowerShell: git clone https://github.com/wjgoarxiv/my-nvim-settings.git "$env:USERPROFILE\my-nvim-settings"
 
-2) Run installer by OS:
+2) Install ImageMagick (required for image preview):
+   - macOS: brew install imagemagick
+   - Ubuntu/Debian: sudo apt install imagemagick
+   - Windows: choco install imagemagick
+
+3) Run installer by OS:
    - macOS/Linux:
      cd ~/my-nvim-settings
      bash ./install.sh --yes --ci
@@ -34,10 +39,10 @@ Clone this repository and install it end-to-end.
      Set-Location "$env:USERPROFILE\my-nvim-settings"
      pwsh -File .\install.ps1 -Yes -CI
 
-3) Verify:
+4) Verify:
    nvim --headless "+Lazy! sync" "+checkhealth" +qa
 
-4) Return:
+5) Return:
    - whether install passed
    - the last 30 log lines
    - any FAILED markers
@@ -97,10 +102,31 @@ You can run the installer again.
 - If your config already points to this repo, the installer reports `SKIPPED`.
 - If your old config is different, it is backed up before relinking.
 
+## Image Preview
+
+This config includes [image.nvim](https://github.com/3rd/image.nvim) for inline image previews (PNG, JPG, GIF, WebP, etc.) directly inside Neovim.
+
+**Requirements:**
+
+- [ImageMagick](https://imagemagick.org/) must be installed
+- A terminal that supports a graphics protocol (see table below)
+
+| OS | Terminal | Backend | Install ImageMagick |
+|----|----------|---------|---------------------|
+| macOS | Ghostty | Kitty protocol (auto-detected) | `brew install imagemagick` |
+| macOS | Kitty | Kitty protocol (auto-detected) | `brew install imagemagick` |
+| Windows | Windows Terminal v1.22+ | Sixel (auto-detected) | `choco install imagemagick` |
+| Linux | Ghostty / Kitty | Kitty protocol (auto-detected) | `sudo apt install imagemagick` |
+
+The backend is auto-detected based on your terminal. No manual configuration needed.
+
+**Unsupported terminals:** macOS Terminal.app, older Windows Terminal (< v1.22).
+
 ## Requirements
 
 - `git`
 - `nvim` (Neovim 0.11+ recommended)
+- `imagemagick` (for image preview)
 
 ## Font (Korean + icons)
 
