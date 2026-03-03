@@ -68,6 +68,8 @@ pwsh -File .\install.ps1 -Yes -CI
 
 Windows notes:
 
+- **Image preview** requires Windows Terminal v1.22+ (Sixel support). Check your version with `wt --version`. ImageMagick must be on PATH — verify with `magick --version`.
+
 - `telescope-fzf-native` needs local build tools. Install and reopen PowerShell:
 
 ```powershell
@@ -159,6 +161,7 @@ choco install -y nerd-fonts-D2Coding
 - Wrong path linked: restore from `nvim-backups` and rerun.
 - Plugin/setup check: run `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
 - `nvim-tree git/utils.lua:15 obj is nil` can appear outside git repos on some Windows setups. It is usually non-fatal; open Neovim inside a git repo for stable git status behavior.
+- Image preview not showing: ensure `imagemagick` is installed and on PATH (`magick --version`). On Windows, requires Windows Terminal v1.22+ for Sixel support. On macOS/Linux, use Ghostty or Kitty.
 
 ## Extra
 
