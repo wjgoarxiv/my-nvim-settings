@@ -1,3 +1,7 @@
+-- Must be set before any plugin loads (prevents netrw from hijacking directories)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 local function resolve_path(path)
 	return vim.uv.fs_realpath(path) or path
 end
@@ -35,6 +39,7 @@ require("wjgoarxiv.plugins.lsp.lspconfig")
 require("wjgoarxiv.plugins.lsp.null-ls")
 require("wjgoarxiv.plugins.treesitter")
 require("wjgoarxiv.plugins.image")
+require("wjgoarxiv.plugins.yazi")
 
 vim.g.copilot_filetypes = { "markdown", "tex", "text", "lua", "python", "bash" }
 

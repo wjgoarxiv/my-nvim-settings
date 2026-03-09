@@ -81,6 +81,11 @@ require("lazy").setup({
   },
   { "akinsho/toggleterm.nvim" },
   {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  {
     "iamcco/markdown-preview.nvim",
     build = "cd app && npm install",
     init = function()
