@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd /Users/woojin/.config/nvim && git push origin main\",\"description\":\"Push to GitHub\"}",
-  "error": "Exit code 1\nTo https://github.com/wjgoarxiv/my-nvim-settings.git\n ! [rejected]        main -> main (fetch first)\nerror: failed to push some refs to 'https://github.com/wjgoarxiv/my-nvim-settings.git'\nhint: Updates were rejected because the remote contains work that you do not\nhint: have locally. This is usually caused by another repository pushing to\nhint: the same ref. If you want to integrate the remote changes, use\nhint: 'git pull' before pushing again.\nhint: See the 'Note about fast-forwards...",
-  "timestamp": "2026-03-09T13:36:25.735Z",
-  "retry_count": 2
-}
