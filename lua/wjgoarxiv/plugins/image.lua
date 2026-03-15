@@ -31,10 +31,37 @@ if not ok then
   return
 end
 
+local is_ghostty = vim.env.GHOSTTY_RESOURCES_DIR ~= nil
+
 image.setup({
   backend = detect_backend(),
   processor = "magick_cli",
   integrations = {
     markdown = { enabled = true },
   },
+  window_overlap_clear_enabled = true,
+  window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
 })
+
+-- Ghostty workaround: send raw Kitty graphics delete-all escape sequence
+-- directly to stdout on BufLeave from image buffers, bypassing image.nvim's
+-- internal clearing which relies on delete-by-id (d=i) that Ghostty mishandles.
+-- See: https://github.com/ghostty-org/ghostty/issues/6711
+if is_ghostty then
+  vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" }, {
+    callback = function()
+      local bufname = vim.api.nvim_buf_get_name(0)
+      if bufname:match("%.png$")
+        or bufname:match("%.jpg$")
+        or bufname:match("%.jpeg$")
+        or bufname:match("%.gif$")
+        or bufname:match("%.webp$")
+        or bufname:match("%.avif$")
+      then
+        -- Send raw Kitty graphics protocol: action=delete, delete=all, quiet=2
+        io.stdout:write("\x1b_Ga=d,d=a,q=2\x1b\\")
+        io.stdout:flush()
+      end
+    end,
+  })
+end
