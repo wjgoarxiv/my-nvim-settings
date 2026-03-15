@@ -5,7 +5,7 @@ It is designed to be safe to rerun and easy to verify.
 
 ## Media
 
-<img src="docs/assets/cover.png?v=2" alt="my-nvim-settings cover" width="100%" />
+<img src="https://raw.githubusercontent.com/wjgoarxiv/my-nvim-settings/main/docs/assets/cover.png" alt="my-nvim-settings cover" width="100%" />
 
 ## What this repo gives you
 
