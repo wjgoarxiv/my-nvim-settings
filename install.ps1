@@ -44,5 +44,4 @@ $targetPath = Join-Path $localAppData "nvim"
 
 Apply-ConfigLink -SourceRoot $RepoRoot -TargetPath $targetPath
 Invoke-PostInstallHeadlessValidation
-. (Join-Path $RepoRoot "lib-win/patch-image-nvim.ps1")
 Write-Installed "Windows installer completed"
