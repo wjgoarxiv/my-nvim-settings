@@ -99,8 +99,8 @@ require("lazy").setup({
     end,
   },
   {
-    "3rd/image.nvim",
-    build = false,
+    "folke/snacks.nvim",
+    priority = 1000,
     lazy = false,
   },
 }, {
