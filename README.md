@@ -1,23 +1,37 @@
-# my-nvim-settings
+<p align="center"><img src="https://raw.githubusercontent.com/wjgoarxiv/my-nvim-settings/main/docs/assets/cover.png" width="100%" /></p>
 
-Set up this Neovim config with one prompt for your LLM agent.
-It is designed to be safe to rerun and easy to verify.
+<h1 align="center">my-nvim-settings</h1>
+<p align="center">
+  <em>Set up a full Neovim config with one prompt for your LLM agent.</em>
+</p>
+<p align="center">
+  <a href="#quick-start">Quick Start</a> · <a href="#features">Features</a> · <a href="#manual-install">Manual Install</a> · <a href="#image-preview">Image Preview</a> · <a href="#troubleshooting">Troubleshooting</a>
+</p>
+<p align="center">
+  <img src="https://img.shields.io/github/stars/wjgoarxiv/my-nvim-settings?style=social" />
+  <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" />
+  <img src="https://img.shields.io/badge/neovim-0.11+-green" />
+  <img src="https://img.shields.io/badge/plugin%20manager-lazy.nvim-blueviolet" />
+</p>
 
-## Media
+---
 
-<img src="https://raw.githubusercontent.com/wjgoarxiv/my-nvim-settings/main/docs/assets/cover.png" alt="my-nvim-settings cover" width="100%" />
+> [!NOTE]
+> A cross-platform Neovim config with a one-prompt onboarding flow for LLM agents. Clone, inject the prompt, install, and verify -- safe to rerun, deterministic health checks, backup-on-replace logic built in.
 
-## What this repo gives you
+## Features
 
-- One-prompt onboarding flow for LLM agents
-- Cross-platform installer for macOS, Linux, and Windows
-- Lazy.nvim-based plugin setup
-- Deterministic post-install health check
-- Safe rerun behavior with backup-on-replace logic
+- **One-Prompt Onboarding** -- Copy-paste a single block into your LLM agent to install end-to-end
+- **Cross-Platform** -- macOS, Linux, and Windows installers with platform-specific handling
+- **Lazy.nvim Plugin Setup** -- Deterministic, locked plugin versions via `lazy-lock.json`
+- **Inline Image Preview** -- View images directly in Neovim via [snacks.nvim](https://github.com/folke/snacks.nvim) (Kitty Graphics Protocol)
+- **Safe Rerun** -- Existing configs are backed up before relinking; idempotent installers
+- **Post-Install Validation** -- Headless health check catches issues before you open Neovim
 
-## Quick Start (LLM-first)
+## Quick Start
 
-✅ Copy and paste this block directly into your agent:
+> [!TIP]
+> Works with any LLM CLI agent (Claude Code, Codex, Gemini CLI). Just paste the block below into your chat.
 
 ```text
 Clone (or update) this repository and install it end-to-end.
@@ -59,7 +73,7 @@ IMPORTANT: Never delete or overwrite existing files without backing them up firs
    - any FAILED markers
 ```
 
-## Manual fallback
+## Manual Install
 
 ### macOS / Linux
 
@@ -77,52 +91,50 @@ Set-Location "$env:USERPROFILE\my-nvim-settings"
 pwsh -File .\install.ps1 -Yes -CI
 ```
 
-Windows notes:
+> [!WARNING]
+> **Windows notes:**
+> - **Image preview** requires Windows Terminal v1.22+ (Kitty Graphics Protocol). Verify with `wt --version`.
+> - `telescope-fzf-native` needs build tools: `choco install -y cmake mingw`
+> - If telescope reports fzf load failure, build manually:
+>   ```
+>   cd "$env:LOCALAPPDATA\nvim-data\lazy\telescope-fzf-native.nvim"
+>   cmake -S . -B build -G "MinGW Makefiles"
+>   cmake --build build --config Release
+>   ```
 
-- **Image preview** requires Windows Terminal v1.22+ (Kitty Graphics Protocol). Check your version with `wt --version`. ImageMagick must be on PATH — verify with `magick --version`.
+## How It Works
 
-- `telescope-fzf-native` needs local build tools. Install and reopen PowerShell:
-
-```powershell
-choco install -y cmake mingw
 ```
+                  my-nvim-settings pipeline
+                  ~~~~~~~~~~~~~~~~~~~~~~~~
 
-- If `telescope` reports fzf extension load failure, build manually:
-
-```powershell
-Set-Location "$env:LOCALAPPDATA\nvim-data\lazy\telescope-fzf-native.nvim"
-cmake -S . -B build -G "MinGW Makefiles"
-cmake --build build --config Release
+ [LLM Agent / User]
+       |
+       v
+ +-------------------+
+ | 1. CLONE          |     git clone / git pull
+ |   - fetch repo    |     safe idempotent update
+ +-------------------+
+       |
+       v
+ +-------------------+
+ | 2. INSTALL        |     install.sh / install.ps1
+ |   - backup old    |     backup-on-replace logic
+ |   - symlink new   |     platform detection
+ |   - sync plugins  |     lazy.nvim + lazy-lock.json
+ +-------------------+
+       |
+       v
+ +-------------------+
+ | 3. VERIFY         |     nvim --headless
+ |   - health check  |     checkhealth + Lazy sync
+ |   - report status |     PASSED / FAILED markers
+ +-------------------+
 ```
-
-## How to know it worked
-
-The installer should finish without `FAILED` lines and include:
-
-- `Post-install headless validation succeeded: nvim --headless "+Lazy! sync" "+checkhealth" +qa`
-- `Unix installer completed` (or Windows completion equivalent)
-
-You can run the validation command manually:
-
-```bash
-nvim --headless "+Lazy! sync" "+checkhealth" +qa
-```
-
-## Rerun Safety
-
-You can run the installer again.
-
-- If your config already points to this repo, the installer reports `SKIPPED`.
-- If your old config is different, it is backed up before relinking.
 
 ## Image Preview
 
 This config includes [snacks.nvim](https://github.com/folke/snacks.nvim) image module for inline image previews (PNG, JPG, GIF, WebP, PDF, etc.) directly inside Neovim.
-
-**Requirements:**
-
-- [ImageMagick](https://imagemagick.org/) must be installed
-- A terminal that supports the Kitty Graphics Protocol (see table below)
 
 | OS | Terminal | Install ImageMagick |
 |----|----------|---------------------|
@@ -131,7 +143,7 @@ This config includes [snacks.nvim](https://github.com/folke/snacks.nvim) image m
 | Windows | Windows Terminal v1.22+ | `choco install imagemagick` |
 | Linux | Ghostty / Kitty | `sudo apt install imagemagick` |
 
-The terminal is auto-detected. No manual configuration needed. For tmux users, ensure your `~/.tmux.conf` includes:
+The terminal is auto-detected. For tmux users, add to `~/.tmux.conf`:
 
 ```tmux
 set -gq allow-passthrough on
@@ -139,49 +151,53 @@ set -g visual-activity off
 set -g focus-events on
 ```
 
-**Unsupported terminals:** macOS Terminal.app, older Windows Terminal (< v1.22).
-
 ## Requirements
 
-- `git`
-- `nvim` (Neovim 0.11+ recommended)
-- `imagemagick` (for image preview)
+| Dependency | Required | Purpose |
+|-----------|----------|---------|
+| `git` | Yes | Clone repository |
+| `nvim` 0.11+ | Yes | Runtime |
+| `imagemagick` | No (recommended) | Inline image preview |
 
-## Font (Korean + icons)
+## Font (Korean + Icons)
 
-Recommended GUI font:
-
-- `D2CodingLigature Nerd Font Mono`
-- fallback: `D2CodingLigature Nerd Font`
-
-If glyphs/icons look wrong, set one of the fonts above in your terminal or Neovim GUI.
-
-Windows quick install (Chocolatey):
+Recommended: **D2CodingLigature Nerd Font Mono** (fallback: `D2CodingLigature Nerd Font`)
 
 ```powershell
+# Windows (Chocolatey)
 choco install -y nerd-fonts-D2Coding
 ```
 
-## Useful Options
+## Installer Options
 
-- Unix: `bash ./install.sh --yes --ci`
-  - `--yes`: auto-confirm
-  - `--ci`: CI-style logs
-- Windows: `pwsh -File .\install.ps1 -Yes -CI`
-  - `-Yes`: auto-confirm
-  - `-CI`: CI-style logs
+| Flag | Unix | Windows | Effect |
+|------|------|---------|--------|
+| Auto-confirm | `--yes` | `-Yes` | Skip confirmation prompts |
+| CI mode | `--ci` | `-CI` | Machine-readable log output |
 
 ## Troubleshooting
 
-- Missing dependency: install `git` or `nvim`, then rerun.
-- Installer failed: check the last `FAILED` line in output.
-- Wrong path linked: restore from `nvim-backups` and rerun.
-- Plugin/setup check: run `nvim --headless "+Lazy! sync" "+checkhealth" +qa`.
-- `nvim-tree git/utils.lua:15 obj is nil` can appear outside git repos on some Windows setups. It is usually non-fatal; open Neovim inside a git repo for stable git status behavior.
-- Image preview not showing: ensure `imagemagick` is installed and on PATH (`magick --version`). Use Ghostty or Kitty terminal. Run `:checkhealth snacks` to diagnose.
-- Image preview not showing on **Windows**: ImageMagick must be installed (`choco install imagemagick`) and Windows Terminal v1.22+ is required (`wt --version`).
+| Problem | Solution |
+|---------|----------|
+| Missing dependency | Install `git` or `nvim`, then rerun |
+| Installer failed | Check the last `FAILED` line in output |
+| Wrong path linked | Restore from `nvim-backups` and rerun |
+| Plugin issues | `nvim --headless "+Lazy! sync" "+checkhealth" +qa` |
+| Image not showing (macOS/Linux) | Install `imagemagick`, use Ghostty or Kitty, run `:checkhealth snacks` |
+| Image not showing (Windows) | `choco install imagemagick` + Windows Terminal v1.22+ |
+| `nvim-tree obj is nil` | Open Neovim inside a git repo; usually non-fatal |
 
-## Extra
+## Contributing
 
-- For one-shot LLM onboarding flow, see `PROMPT.md`.
-- For exact installer behavior, see `install.sh` and `install.ps1`.
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/my-feature`)
+3. Commit your changes
+4. Open a Pull Request
+
+For bug reports or feature requests, please [open an issue](https://github.com/wjgoarxiv/my-nvim-settings/issues).
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
