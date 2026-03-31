@@ -15,11 +15,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    "Mofiqul/dracula.nvim",
+    "folke/tokyonight.nvim",
     config = function()
-      require("dracula").setup({
-        transparent_bg = false,
-        italic_comment = true,
+      require("tokyonight").setup({
+        transparent = false,
+        styles = {
+          sidebars = "",
+          floats = "",
+        },
+        sidebars = { "qf", "help", "NvimTree", "Outline", "terminal" },
       })
     end,
   },

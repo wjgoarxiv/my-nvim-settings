@@ -4,14 +4,14 @@ if not ok then return end
 -- 기본값은 'auto' (현재 colorscheme에 맞춰 안전 동작)
 local theme = "auto"
 
-local ok_theme, base = pcall(require, "lualine.themes.dracula")
+local ok_theme, base = pcall(require, "lualine.themes.tokyonight")
 if ok_theme then
   local new_colors = {
-    blue   = "#8be9fd",
-    green  = "#50fa7b",
-    violet = "#ff79c6",
-    yellow = "#f1fa8c",
-    black  = "#282a36",
+    blue   = "#7aa2f7",
+    green  = "#9ece6a",
+    violet = "#bb9af7",
+    yellow = "#e0af68",
+    black  = "#1a1b26",
   }
 
   -- 커스텀 색 유지

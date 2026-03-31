@@ -1,4 +1,4 @@
-local has_dracula, dracula = pcall(require, "dracula")
+local has_tokyo, tokyonight = pcall(require, "tokyonight")
 
 local function detect_macos_background()
 	if vim.fn.has("macunix") ~= 1 then
@@ -58,40 +58,26 @@ local function safe_colorscheme(name)
 	return ok
 end
 
-if has_dracula then
-	dracula.setup({
-		transparent_bg = false,
-		italic_comment = true,
+if has_tokyo then
+	tokyonight.setup({
+		transparent = false,
+		sidebars = { "qf", "help", "NvimTree", "Outline", "terminal" },
+		styles = { sidebars = "", floats = "" },
 	})
 end
 
-local function apply_eza_highlights()
-	local palette = {
-		dir = "#8be9fd",
-		exec = "#50fa7b",
-		symlink = "#f1fa8c",
-		archive = "#ffb86c",
-		hidden = "#6272a4",
-		accent = "#ff79c6",
-	}
+local function apply_tokyonight_variant(background)
+	local variant = background == "light" and "tokyonight-day" or "tokyonight-night"
+	if safe_colorscheme(variant) then
+		return true
+	end
 
-	vim.api.nvim_set_hl(0, "Directory", { fg = palette.dir, bold = true })
-	vim.api.nvim_set_hl(0, "NvimTreeFolderName", { fg = palette.dir, bold = true })
-	vim.api.nvim_set_hl(0, "NvimTreeOpenedFolderName", { fg = palette.dir, bold = true })
-	vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", { fg = palette.hidden })
-	vim.api.nvim_set_hl(0, "NvimTreeExecFile", { fg = palette.exec, bold = true })
-	vim.api.nvim_set_hl(0, "NvimTreeSymlink", { fg = palette.symlink, italic = true })
-	vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = palette.accent, bold = true })
-	vim.api.nvim_set_hl(0, "TelescopeSelection", { fg = palette.dir, bold = true })
-	vim.api.nvim_set_hl(0, "@string.special.path", { fg = palette.archive })
+	return safe_colorscheme("default")
 end
 
 local function apply_colorscheme(background)
-	if has_dracula then
-		if safe_colorscheme("dracula") then
-			apply_eza_highlights()
-			return true
-		end
+	if has_tokyo then
+		return apply_tokyonight_variant(background)
 	end
 	return safe_colorscheme("default")
 end
@@ -123,8 +109,3 @@ vim.api.nvim_create_autocmd("OptionSet", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-	group = colorscheme_group,
-	pattern = "*",
-	callback = apply_eza_highlights,
-})
