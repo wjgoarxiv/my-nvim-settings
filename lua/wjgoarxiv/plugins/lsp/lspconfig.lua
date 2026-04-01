@@ -72,7 +72,6 @@ end
 
 setup_lsp("bashls")
 setup_lsp("cssls")
-setup_lsp("grammarly")
 setup_lsp("html")
 setup_lsp("ltex")
 setup_lsp("lua_ls", {

@@ -20,7 +20,6 @@ mason_lspconfig.setup({
   ensure_installed = {
     "bashls",
     "cssls",
-    "grammarly",
     "html",
     "ltex",
     "lua_ls",
