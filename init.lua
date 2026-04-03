@@ -40,6 +40,7 @@ require("wjgoarxiv.plugins.lsp.null-ls")
 require("wjgoarxiv.plugins.treesitter")
 require("wjgoarxiv.plugins.image")
 
+vim.g.copilot_npx_command = "npx.cmd"
 vim.g.copilot_filetypes = { "markdown", "tex", "text", "lua", "python", "bash" }
 
 local clipboard_path = "/mnt/c/Windows/System32/clip.exe"
