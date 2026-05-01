@@ -83,7 +83,43 @@ require("lazy").setup({
     "windwp/nvim-ts-autotag",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
-  { "akinsho/toggleterm.nvim" },
+  {
+    "mikavilpas/yazi.nvim",
+    version = "*",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<C-\\>", "<cmd>Yazi<cr>", desc = "Open yazi at current file", mode = { "n" } },
+    },
+    opts = {
+      open_for_directories = false,
+      config_home = vim.fs.joinpath(vim.fn.stdpath("config"), "yazi"),
+      set_keymappings_function = function(yazi_buffer)
+        vim.keymap.set("t", "<C-\\>", function()
+          vim.api.nvim_feedkeys("q", "t", false)
+        end, { buffer = yazi_buffer, desc = "Close yazi" })
+      end,
+      keymaps = {
+        change_working_directory = false,
+        copy_relative_path_to_selected_files = false,
+      },
+      hooks = {
+        yazi_closed_successfully = function(_, _, state)
+          local last_directory = state and state.last_directory
+          local root = last_directory and last_directory.filename
+
+          if not root or vim.fn.isdirectory(root) ~= 1 then
+            return
+          end
+
+          local ok, api = pcall(require, "nvim-tree.api")
+          if ok then
+            api.tree.change_root(root)
+          end
+        end,
+      },
+    },
+  },
   {
     "iamcco/markdown-preview.nvim",
     build = "cd app && npm install",
