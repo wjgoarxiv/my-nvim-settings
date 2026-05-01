@@ -166,7 +166,21 @@ Install the yazi binary before using the shortcut:
 | Windows PowerShell | `winget install sxyazi.yazi` |
 | Windows MSYS2 UCRT64 zsh | `pacman -S mingw-w64-ucrt-x86_64-yazi` |
 
-Inside yazi, `<Enter>` enters a hovered directory or opens a hovered file via the bundled `smart-enter` plugin. When yazi closes, the nvim-tree root follows yazi's last directory.
+Inside yazi, `<Enter>` enters a hovered directory or opens a hovered file via the bundled `smart-enter` plugin. The bundled yazi config also applies a Tokyo Night flavor, shows Git status via `git.yazi`, and maps `T` / `~` to hide or maximize the preview pane. When yazi closes, the nvim-tree root follows yazi's last directory.
+
+For standalone terminal yazi, the repo includes an optional cd-on-quit helper. It is not installed automatically; source it manually from your shell rc if you want `y` to leave your shell in yazi's last directory:
+
+```bash
+source ~/.config/nvim/yazi/yazi-cd.sh
+```
+
+The helper uses `~/.config/nvim/yazi` as `YAZI_CONFIG_HOME` when that directory exists, so standalone `y` gets the same Tokyo Night, Git status, and pane-toggle setup as yazi.nvim. Plain `yazi` still uses Yazi's default `~/.config/yazi` unless you set `YAZI_CONFIG_HOME` yourself:
+
+```bash
+YAZI_CONFIG_HOME=~/.config/nvim/yazi yazi --debug
+```
+
+The helper only affects standalone shell sessions. It does not change Neovim's cwd and does not alter the `<C-\>` yazi.nvim workflow.
 
 After installation, run `:Lazy load yazi.nvim` and then `:checkhealth yazi` inside Neovim if the shortcut does not open yazi.
 
