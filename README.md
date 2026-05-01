@@ -24,6 +24,7 @@
 - **One-Prompt Onboarding** -- Copy-paste a single block into your LLM agent to install end-to-end
 - **Cross-Platform** -- macOS, Linux, and Windows installers with platform-specific handling
 - **Lazy.nvim Plugin Setup** -- Deterministic, locked plugin versions via `lazy-lock.json`
+- **Yazi File Navigation** -- Open [yazi](https://github.com/sxyazi/yazi) from the current file's folder with `<C-\>`
 - **Inline Image Preview** -- View images directly in Neovim via [snacks.nvim](https://github.com/folke/snacks.nvim) (Kitty Graphics Protocol)
 - **Safe Rerun** -- Existing configs are backed up before relinking; idempotent installers
 - **Post-Install Validation** -- Headless health check catches issues before you open Neovim
@@ -49,10 +50,11 @@ IMPORTANT: Never delete or overwrite existing files without backing them up firs
      If "$env:USERPROFILE\my-nvim-settings" already exists:
        Set-Location "$env:USERPROFILE\my-nvim-settings"; git pull
 
-2) Install ImageMagick (skip if already installed):
-   - macOS: brew install imagemagick
-   - Ubuntu/Debian: sudo apt install imagemagick
-   - Windows: choco install imagemagick
+2) Install optional runtime tools (skip ones already installed):
+   - macOS: brew install imagemagick yazi
+   - Ubuntu/Debian: sudo apt install imagemagick yazi
+   - Windows PowerShell: choco install imagemagick; winget install sxyazi.yazi
+   - Windows MSYS2 UCRT64 zsh: pacman -S mingw-w64-ucrt-x86_64-yazi
 
 3) Run installer by OS:
    - macOS/Linux:
@@ -151,12 +153,30 @@ set -g visual-activity off
 set -g focus-events on
 ```
 
+## Yazi File Navigation
+
+This config maps `<C-\>` to [yazi.nvim](https://github.com/mikavilpas/yazi.nvim), opening yazi in a floating window at the current file's directory. Press `<C-\>` again inside the yazi popup to close it. `nvim-tree` (`<leader>e`) and Telescope (`<leader>ff`, `<leader>fs`, etc.) remain unchanged.
+
+Install the yazi binary before using the shortcut:
+
+| OS | Install yazi |
+|----|--------------|
+| macOS | `brew install yazi` |
+| Linux | `sudo apt install yazi` or your distro package manager |
+| Windows PowerShell | `winget install sxyazi.yazi` |
+| Windows MSYS2 UCRT64 zsh | `pacman -S mingw-w64-ucrt-x86_64-yazi` |
+
+Inside yazi, `<Enter>` enters a hovered directory or opens a hovered file via the bundled `smart-enter` plugin. When yazi closes, the nvim-tree root follows yazi's last directory.
+
+After installation, run `:Lazy load yazi.nvim` and then `:checkhealth yazi` inside Neovim if the shortcut does not open yazi.
+
 ## Requirements
 
 | Dependency | Required | Purpose |
 |-----------|----------|---------|
 | `git` | Yes | Clone repository |
 | `nvim` 0.11+ | Yes | Runtime |
+| `yazi` | No (recommended) | Floating TUI file navigation with `<C-\>` |
 | `imagemagick` | No (recommended) | Inline image preview |
 
 ## Font (Korean + Icons)
@@ -183,6 +203,7 @@ choco install -y nerd-fonts-D2Coding
 | Installer failed | Check the last `FAILED` line in output |
 | Wrong path linked | Restore from `nvim-backups` and rerun |
 | Plugin issues | `nvim --headless "+Lazy! sync" "+checkhealth" +qa` |
+| `<C-\>` does not open yazi | Install `yazi`, then run `:Lazy load yazi.nvim` followed by `:checkhealth yazi` |
 | Image not showing (macOS/Linux) | Install `imagemagick`, use Ghostty or Kitty, run `:checkhealth snacks` |
 | Image not showing (Windows) | `choco install imagemagick` + Windows Terminal v1.22+ |
 | `nvim-tree obj is nil` | Open Neovim inside a git repo; usually non-fatal |
