@@ -94,6 +94,9 @@ end
 
 local function apply_tokyonight_variant(background)
 	local variant = background == "light" and "tokyonight-day" or "tokyonight-night"
+	if vim.g.colors_name == variant then
+		return true
+	end
 	if safe_colorscheme(variant) then
 		return true
 	end
