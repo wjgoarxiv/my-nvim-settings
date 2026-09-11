@@ -25,6 +25,7 @@
 - **Cross-Platform** -- macOS, Linux, and Windows installers with platform-specific handling
 - **Lazy.nvim Plugin Setup** -- Deterministic, locked plugin versions via `lazy-lock.json`
 - **Yazi File Navigation** -- Open [yazi](https://github.com/sxyazi/yazi) from the current file's folder with `<C-\>`
+- **Light / Dark Theme Preference** -- Tokyonight Night or Day, picked with `:Theme light|dark|auto` and remembered across restarts
 - **Inline Image Preview** -- View images directly in Neovim via [snacks.nvim](https://github.com/folke/snacks.nvim) (Kitty Graphics Protocol)
 - **Safe Rerun** -- Existing configs are backed up before relinking; idempotent installers
 - **Post-Install Validation** -- Headless health check catches issues before you open Neovim
@@ -184,6 +185,21 @@ The helper only affects standalone shell sessions. It does not change Neovim's c
 
 After installation, run `:Lazy load yazi.nvim` and then `:checkhealth yazi` inside Neovim if the shortcut does not open yazi.
 
+## Theme (Light / Dark)
+
+The colorscheme is [tokyonight.nvim](https://github.com/folke/tokyonight.nvim): `tokyonight-night` for dark and `tokyonight-day` for light. Pick the one you prefer from inside Neovim:
+
+| Command | Effect |
+|---------|--------|
+| `:Theme light` | Use Tokyonight Day and remember it |
+| `:Theme dark` | Use Tokyonight Night and remember it |
+| `:Theme auto` | Follow the system appearance (default) |
+| `<leader>tt` | Toggle between light and dark |
+
+The choice is stored as a single word in `stdpath("state")/wjgoarxiv-theme` (`~/.local/state/nvim/wjgoarxiv-theme` on macOS/Linux), never inside this repo. An explicit `light` or `dark` wins over any automatic detection; `auto` reads the macOS appearance setting (`defaults read -g AppleInterfaceStyle`) and falls back to dark on other platforms unless Neovim already knows the terminal is light.
+
+The lualine statusline follows the active variant, and the bundled yazi config ships a matching `tokyo-day` flavor for light terminals. Terminal emulators and tmux keep their own themes; this setting only affects Neovim.
+
 ## Requirements
 
 | Dependency | Required | Purpose |
@@ -218,6 +234,7 @@ choco install -y nerd-fonts-D2Coding
 | Wrong path linked | Restore from `nvim-backups` and rerun |
 | Plugin issues | `nvim --headless "+Lazy! sync" "+checkhealth" +qa` |
 | `<C-\>` does not open yazi | Install `yazi`, then run `:Lazy load yazi.nvim` followed by `:checkhealth yazi` |
+| Theme flips back after start | Pin it with `:Theme dark` or `:Theme light`; `:Theme auto` re-enables detection |
 | Image not showing (macOS/Linux) | Install `imagemagick`, use Ghostty or Kitty, run `:checkhealth snacks` |
 | Image not showing (Windows) | `choco install imagemagick` + Windows Terminal v1.22+ |
 | `nvim-tree obj is nil` | Open Neovim inside a git repo; usually non-fatal |
