@@ -196,7 +196,7 @@ The colorscheme is [tokyonight.nvim](https://github.com/folke/tokyonight.nvim): 
 | `:Theme auto` | Follow the system appearance (default) |
 | `<leader>tt` | Toggle between light and dark |
 
-The choice is stored as a single word in `stdpath("state")/wjgoarxiv-theme` (`~/.local/state/nvim/wjgoarxiv-theme` on macOS/Linux), never inside this repo. An explicit `light` or `dark` wins over any automatic detection; `auto` reads the macOS appearance setting (`defaults read -g AppleInterfaceStyle`) and falls back to dark on other platforms unless Neovim already knows the terminal is light.
+The choice is stored as a single word in `stdpath("state")/wjgoarxiv-theme` (`~/.local/state/nvim/wjgoarxiv-theme` on macOS/Linux), never inside this repo. An explicit `light` or `dark` wins over any automatic detection; `auto` reads the macOS appearance setting (`defaults read -g AppleInterfaceStyle`); on other platforms it leaves Neovim's own `background` value untouched, so the variant follows whatever Neovim detected.
 
 The lualine statusline follows the active variant, and the bundled yazi config ships a matching `tokyo-day` flavor for light terminals. Terminal emulators and tmux keep their own themes; this setting only affects Neovim.
 
