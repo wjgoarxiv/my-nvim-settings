@@ -1,37 +1,46 @@
 local ok, lualine = pcall(require, "lualine")
 if not ok then return end
 
--- 기본값은 'auto' (현재 colorscheme에 맞춰 안전 동작)
-local theme = "auto"
+-- 활성 tokyonight variant(night/day)의 팔레트로 테마를 만든다.
+-- tokyonight가 없거나 다른 colorscheme이면 'auto'로 안전 동작.
+local function build_theme()
+  local style = (vim.g.colors_name or ""):match("^tokyonight%-(%w+)$")
+  if not style then return "auto" end
 
-local ok_theme, base = pcall(require, "lualine.themes.tokyonight")
-if ok_theme then
-  local new_colors = {
-    blue   = "#7aa2f7",
-    green  = "#9ece6a",
-    violet = "#bb9af7",
-    yellow = "#e0af68",
-    black  = "#1a1b26",
-  }
+  local ok_hl, base = pcall(function()
+    return require("lualine.themes._tokyonight").get(style)
+  end)
+  local ok_colors, colors = pcall(function()
+    return require("tokyonight.colors").setup({ style = style })
+  end)
+  if not (ok_hl and ok_colors) then return "auto" end
 
-  -- 커스텀 색 유지
-  base.normal.a.bg = new_colors.blue
-  base.insert.a.bg = new_colors.green
-  base.visual.a.bg = new_colors.violet
+  -- 커스텀 색 유지 (팔레트 키만 사용, hex 하드코딩 없음)
+  base.normal.a.bg = colors.blue
+  base.insert.a.bg = colors.green
+  base.visual.a.bg = colors.magenta
   base.command = {
-    a = { gui = "bold", bg = new_colors.yellow, fg = new_colors.black },
+    a = { gui = "bold", bg = colors.yellow, fg = colors.black },
   }
 
-  theme = base
+  return base
 end
 
-lualine.setup({
-  options = {
-    theme = theme,         
-    icons_enabled = true,
-    globalstatus = true,
-    component_separators = { left = "│", right = "│" },
-    section_separators = { left = "", right = "" },
-    disabled_filetypes = { "NvimTree", "TelescopePrompt" },
-  },
-})
+local function setup()
+  lualine.setup({
+    options = {
+      theme = build_theme(),
+      icons_enabled = true,
+      globalstatus = true,
+      component_separators = { left = "│", right = "│" },
+      section_separators = { left = "", right = "" },
+      disabled_filetypes = { "NvimTree", "TelescopePrompt" },
+    },
+  })
+end
+
+setup()
+
+local group = vim.api.nvim_create_augroup("wjgoarxiv_lualine_theme", { clear = true })
+vim.api.nvim_create_autocmd("ColorScheme", { group = group, pattern = "tokyonight*", callback = setup })
+vim.api.nvim_create_autocmd("User", { group = group, pattern = "WjgoarxivThemeChanged", callback = setup })
