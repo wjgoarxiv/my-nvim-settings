@@ -3,3 +3,7 @@
 .omc/
 .DS_Store
 **/.DS_Store
+.claude/
+plans/
+.litclaude/
+.sisyphus/
