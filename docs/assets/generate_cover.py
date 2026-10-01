@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 W, H = 2560, 1280
-CORNER_RADIUS = 80
+CORNER_RADIUS = 141
 
 # ── 1. Base canvas (dark navy) ───────────────────────────────────────────────
 base = Image.new("RGBA", (W, H), (8, 10, 22, 255))
