@@ -209,6 +209,8 @@ The lualine statusline follows the active variant, and the bundled yazi config s
 | `yazi` | No (recommended) | Floating TUI file navigation with `<C-\>` |
 | `imagemagick` | No (recommended) | Inline image preview |
 
+On Apple Silicon Macs the installer always runs as arm64: if the terminal runs under Rosetta it re-launches itself natively, rebuilds any leftover x86_64 plugin build such as `telescope-fzf-native`'s `libfzf.so`, and refuses to continue with an x86_64-only `nvim`.
+
 ## Font (Korean + Icons)
 
 Recommended: **D2CodingLigature Nerd Font Mono** (fallback: `D2CodingLigature Nerd Font`)

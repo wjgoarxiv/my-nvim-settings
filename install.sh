@@ -41,6 +41,7 @@ parse_args() {
 }
 
 main() {
+  ensure_native_arch "${BASH_SOURCE[0]}" "$@"
   parse_args "$@"
 
   if [ "$ASSUME_YES" = true ]; then
@@ -61,6 +62,7 @@ main() {
   target_path="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
 
   apply_config_link "$REPO_ROOT" "$target_path"
+  rebuild_foreign_arch_plugin_builds
   run_post_install_headless_validation
   log_installed "Unix installer completed"
 }
